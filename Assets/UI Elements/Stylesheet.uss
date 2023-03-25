@@ -1,0 +1,29 @@
+.button {
+    background-color: rgba(191, 255, 243, 255);
+    color: rgba(0, 0, 0, 255);
+    -unity-text-align: upper-center;
+    -unity-font-style: bold;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.container {
+    background-color: rgba(90, 235, 255, 255);
+    color: rgba(0, 0, 0, 255);
+    -unity-font-style: bold;
+    font-size: 18px;
+    border-left-color: rgba(1, 0, 111, 255);
+    border-right-color: rgba(1, 0, 111, 255);
+    border-top-color: rgba(1, 0, 111, 255);
+    border-bottom-color: rgba(1, 0, 111, 255);
+    border-left-width: 5px;
+    border-right-width: 5px;
+    border-top-width: 5px;
+    border-bottom-width: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}

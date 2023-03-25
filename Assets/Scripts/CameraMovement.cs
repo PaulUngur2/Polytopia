@@ -4,19 +4,11 @@ public class CameraMovement : MonoBehaviour {
     public int movementSpeed = 1;
     public int rotationSpeed = 1;
     public int lowerCameraLimit = 1;
-    public int uperCameraLimit = 10;
+    public int upperCameraLimit = 10;
     public int lateralCameraLimit = 200;
 
     void FixedUpdate() {
         Transform currentTransform = transform;
-
-        if (Input.GetButton("Fire1")) {
-            Vector3 position = currentTransform.position;
-            float deltaX = Input.GetAxis("Mouse X") * rotationSpeed;
-            float deltaY = Input.GetAxis("Mouse Y") * rotationSpeed;
-            currentTransform.RotateAround(position, Vector3.up, deltaX);
-            currentTransform.RotateAround(position, currentTransform.right, -deltaY);
-        }
 
         if (Input.GetKey(KeyCode.W)) {
             Vector3 movementDirection = Vector3.Cross(currentTransform.right, Vector3.up);
@@ -31,7 +23,7 @@ public class CameraMovement : MonoBehaviour {
             currentTransform.position += movementDirection * movementSpeed;
         } else if (Input.GetKey(KeyCode.D)) {
             Vector3 movementDirection = Vector3.Cross(currentTransform.forward, Vector3.up);
-            currentTransform.position -= movementDirection * movementSpeed;
+        currentTransform.position -= movementDirection * movementSpeed;
         }
 
         if (currentTransform.position.x > lateralCameraLimit) {
@@ -60,7 +52,7 @@ public class CameraMovement : MonoBehaviour {
             currentTransform.Rotate(Vector3.up, rotationSpeed);
         }
 
-        if (Input.GetKey(KeyCode.Space) && currentTransform.position.y < uperCameraLimit) {
+        if (Input.GetKey(KeyCode.Space) && currentTransform.position.y < upperCameraLimit) {
             currentTransform.position += Vector3.up * movementSpeed;
         } else if (Input.GetKey(KeyCode.LeftShift) && currentTransform.position.y > lowerCameraLimit) {
             currentTransform.position += Vector3.down * movementSpeed;

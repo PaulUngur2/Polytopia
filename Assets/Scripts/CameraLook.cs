@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class CameraLook : MonoBehaviour {
     public int mouseSensitivity = 1;

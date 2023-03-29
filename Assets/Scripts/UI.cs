@@ -7,50 +7,55 @@ public class UI : MonoBehaviour {
     public GameObject cylinder;
     public GameObject sphere;
 
-    private bool cubeSelected ;
+    private bool cubeSelected;
     private bool cylinderSelected;
     private bool sphereSelected;
 
     private GameObject currentPrefab;
-    private Camera camera;
+    private Camera mainCamera;
     private Plane plane;
 
     private void Start() {
         cubeSelected = false;
         cylinderSelected = false;
         sphereSelected = false;
-        camera = Camera.main;
+        mainCamera = Camera.main;
         plane = new Plane(Vector3.up, Vector3.zero);
     }
 
     void Update() {
-        currentPrefab.transform.position = CastRay();
         if (cubeSelected) {
+            Vector3 mousePosition = Utils.CastRay(mainCamera, plane);
+            currentPrefab.transform.position = mousePosition;
             if (Input.GetMouseButton(1)) {
                 Select("");
             }
         } else if (cylinderSelected) {
+            Vector3 mousePosition = Utils.CastRay(mainCamera, plane);
+            currentPrefab.transform.position = mousePosition;
             if (Input.GetMouseButton(1)) {
                 Select("");
             }
         } else if (sphereSelected) {
+            Vector3 mousePosition = Utils.CastRay(mainCamera, plane);
+            currentPrefab.transform.position = mousePosition;
             if (Input.GetMouseButton(1)) {
                 Select("");
             }
         }
     }
 
-    private Vector3 CastRay() {
-        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-        Vector3 hitPoint = new Vector3(0, -10, 0);
-
-        if (plane.Raycast(ray, out var enter)) {
-            hitPoint = ray.GetPoint(enter);
-            hitPoint.y += 1;
-        }
-
-        return hitPoint;
-    }
+    // private Vector3 CastRay() {
+    //     Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+    //     Vector3 hitPoint = new Vector3(0, -10, 0);
+    //
+    //     if (plane.Raycast(ray, out var enter)) {
+    //         hitPoint = ray.GetPoint(enter);
+    //         hitPoint.y += 1;
+    //     }
+    //
+    //     return hitPoint;
+    // }
 
     private void OnEnable() {
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
@@ -70,19 +75,19 @@ public class UI : MonoBehaviour {
                 cubeSelected = true;
                 cylinderSelected = false;
                 sphereSelected = false;
-                currentPrefab = Instantiate(cube, CastRay(), Quaternion.identity);
+                currentPrefab = Instantiate(cube, Utils.CastRay(mainCamera, plane), Quaternion.identity);
                 break;
             case "cylinder":
                 cubeSelected = false;
                 cylinderSelected = true;
                 sphereSelected = false;
-                currentPrefab = Instantiate(cylinder, CastRay(), Quaternion.identity);
+                currentPrefab = Instantiate(cylinder, Utils.CastRay(mainCamera, plane), Quaternion.identity);
                 break;
             case "sphere":
                 cubeSelected = false;
                 cylinderSelected = false;
                 sphereSelected = true;
-                currentPrefab = Instantiate(sphere, CastRay(), Quaternion.identity);
+                currentPrefab = Instantiate(sphere, Utils.CastRay(mainCamera, plane), Quaternion.identity);
                 break;
             default:
                 cubeSelected = false;

@@ -8,7 +8,7 @@ public class Utils : MonoBehaviour
 
         if (plane.Raycast(ray, out var enter)) {
             hitPoint = ray.GetPoint(enter);
-            hitPoint.y += 1;
+            hitPoint.y += 0.5f;
         }
 
         return hitPoint;

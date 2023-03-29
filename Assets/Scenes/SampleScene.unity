@@ -432,7 +432,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 1
   rotationSpeed: 1
-  lowerCameraLimit: 1
+  lowerCameraLimit: 2
   upperCameraLimit: 10
   lateralCameraLimit: 200
 --- !u!114 &963194231
@@ -447,7 +447,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b7102de5b7d5ec4ba09acb3ffd59962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 1
+  mouseSensitivity: 10
 --- !u!1 &1134208786
 GameObject:
   m_ObjectHideFlags: 0
@@ -695,7 +695,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2443ab65177fab34aa0a0f81f6203e16, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7239cf08bcfe4484799d1628b363dc3c, type: 3}
   m_Type: 2
   m_PreserveAspect: 0
   m_FillCenter: 1

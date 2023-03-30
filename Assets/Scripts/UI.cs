@@ -7,6 +7,7 @@ public class UI : MonoBehaviour {
     public GameObject cylinder;
     public GameObject sphere;
 
+    private bool buildEnabled;
     private bool cubeSelected;
     private bool cylinderSelected;
     private bool sphereSelected;
@@ -16,6 +17,7 @@ public class UI : MonoBehaviour {
     private Plane plane;
 
     private void Start() {
+        buildEnabled = false;
         cubeSelected = false;
         cylinderSelected = false;
         sphereSelected = false;
@@ -24,38 +26,36 @@ public class UI : MonoBehaviour {
     }
 
     void Update() {
-        if (cubeSelected) {
+        if (buildEnabled) {
             Vector3 mousePosition = Utils.CastRay(mainCamera, plane);
+            mousePosition.x = (float)Math.Round(mousePosition.x);
+            mousePosition.z = (float)Math.Round(mousePosition.z);
             currentPrefab.transform.position = mousePosition;
-            if (Input.GetMouseButton(1)) {
-                Select("");
-            }
-        } else if (cylinderSelected) {
-            Vector3 mousePosition = Utils.CastRay(mainCamera, plane);
-            currentPrefab.transform.position = mousePosition;
-            if (Input.GetMouseButton(1)) {
-                Select("");
-            }
-        } else if (sphereSelected) {
-            Vector3 mousePosition = Utils.CastRay(mainCamera, plane);
-            currentPrefab.transform.position = mousePosition;
-            if (Input.GetMouseButton(1)) {
-                Select("");
+
+            if (cubeSelected) {
+                if (Input.GetMouseButton(1)) {
+                    Select("");
+                } else if (Input.GetKey(KeyCode.Escape)) {
+                    Destroy(currentPrefab);
+                    Select("");
+                }
+            } else if (cylinderSelected) {
+                if (Input.GetMouseButton(1)) {
+                    Select("");
+                } else if (Input.GetKey(KeyCode.Escape)) {
+                    Destroy(currentPrefab);
+                    Select("");
+                }
+            } else if (sphereSelected) {
+                if (Input.GetMouseButton(1)) {
+                    Select("");
+                } else if (Input.GetKey(KeyCode.Escape)) {
+                    Destroy(currentPrefab);
+                    Select("");
+                }
             }
         }
     }
-
-    // private Vector3 CastRay() {
-    //     Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-    //     Vector3 hitPoint = new Vector3(0, -10, 0);
-    //
-    //     if (plane.Raycast(ray, out var enter)) {
-    //         hitPoint = ray.GetPoint(enter);
-    //         hitPoint.y += 1;
-    //     }
-    //
-    //     return hitPoint;
-    // }
 
     private void OnEnable() {
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
@@ -72,24 +72,28 @@ public class UI : MonoBehaviour {
     private void Select(String item) {
         switch (item) {
             case "cube":
+                buildEnabled = true;
                 cubeSelected = true;
                 cylinderSelected = false;
                 sphereSelected = false;
                 currentPrefab = Instantiate(cube, Utils.CastRay(mainCamera, plane), Quaternion.identity);
                 break;
             case "cylinder":
+                buildEnabled = true;
                 cubeSelected = false;
                 cylinderSelected = true;
                 sphereSelected = false;
                 currentPrefab = Instantiate(cylinder, Utils.CastRay(mainCamera, plane), Quaternion.identity);
                 break;
             case "sphere":
+                buildEnabled = true;
                 cubeSelected = false;
                 cylinderSelected = false;
                 sphereSelected = true;
                 currentPrefab = Instantiate(sphere, Utils.CastRay(mainCamera, plane), Quaternion.identity);
                 break;
             default:
+                buildEnabled = false;
                 cubeSelected = false;
                 cylinderSelected = false;
                 sphereSelected = false;

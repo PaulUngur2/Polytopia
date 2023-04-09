@@ -59,18 +59,22 @@ public class CameraMovement : MonoBehaviour {
         }
     }
 
+    private float startTime;
+
     private void Update() {
         Transform currentTransform = transform;
 
         float scrollDelta = Input.mouseScrollDelta.y;
         if (scrollDelta == 0) return;
 
+        // startTime = Time.time;
         Vector3 direction = Vector3.up + Vector3.Cross(Vector3.up, currentTransform.transform.right);
 
-        if (scrollDelta > 0 && currentTransform.position.y > lowerCameraLimit) {
+        if ((scrollDelta > 0 && currentTransform.position.y > lowerCameraLimit) ||
+            (scrollDelta < 0 && currentTransform.position.y < upperCameraLimit)) {
+            currentTransform.Rotate(Vector3.left,3 * scrollDelta);
             currentTransform.position -= direction * scrollDelta;
-        } else if (scrollDelta < 0 && currentTransform.position.y < upperCameraLimit) {
-            currentTransform.position -= direction * scrollDelta;
+            // currentTransform.position = Vector3.Lerp(direction * scrollDelta, currentTransform.position, i);
         }
     }
 }

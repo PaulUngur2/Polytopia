@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class UI : MonoBehaviour {
+public class BuildUILogic : MonoBehaviour {
     public GameObject cube;
     public GameObject cylinder;
     public GameObject sphere;
@@ -32,26 +32,34 @@ public class UI : MonoBehaviour {
             mousePosition.z = (float)Math.Round(mousePosition.z);
             currentPrefab.transform.position = mousePosition;
 
+            // This if else might be useless
+            // We'll see when we add the models
             if (cubeSelected) {
-                if (Input.GetMouseButton(1)) {
-                    Select("");
-                } else if (Input.GetKey(KeyCode.Escape)) {
+                if (Input.GetMouseButton((int)MouseButton.LeftMouse)) {
+                    if (Place(currentPrefab)) {
+                        Select(null);
+                    }
+                } else if (Input.GetKey(KeyCode.Escape) || Input.GetMouseButton((int)MouseButton.RightMouse)) {
                     Destroy(currentPrefab);
-                    Select("");
+                    Select(null);
                 }
             } else if (cylinderSelected) {
-                if (Input.GetMouseButton(1)) {
-                    Select("");
-                } else if (Input.GetKey(KeyCode.Escape)) {
+                if (Input.GetMouseButton((int)MouseButton.LeftMouse)) {
+                    if (Place(currentPrefab)) {
+                        Select(null);
+                    }
+                } else if (Input.GetKey(KeyCode.Escape) || Input.GetMouseButton((int)MouseButton.RightMouse)) {
                     Destroy(currentPrefab);
-                    Select("");
+                    Select(null);
                 }
             } else if (sphereSelected) {
-                if (Input.GetMouseButton(1)) {
-                    Select("");
-                } else if (Input.GetKey(KeyCode.Escape)) {
+                if (Input.GetMouseButton((int)MouseButton.LeftMouse)) {
+                    if (Place(currentPrefab)) {
+                        Select(null);
+                    }
+                } else if (Input.GetKey(KeyCode.Escape) || Input.GetMouseButton((int)MouseButton.RightMouse)) {
                     Destroy(currentPrefab);
-                    Select("");
+                    Select(null);
                 }
             }
         }
@@ -100,5 +108,16 @@ public class UI : MonoBehaviour {
                 currentPrefab = null;
                 break;
         }
+    }
+
+    private bool Place(GameObject prefab) {
+        Bounds bounds = prefab.GetComponent<Collider>().bounds;
+
+        if (GlobalVariables.matrix.CanPlace(bounds)) {
+            GlobalVariables.matrix.AddOccupiedTiles(bounds);
+            return true;
+        }
+
+        return false;
     }
 }

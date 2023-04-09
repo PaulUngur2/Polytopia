@@ -1,9 +1,8 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class GridManager : MonoBehaviour {
     public GameObject gridMask;
-    
+
     private bool showGrid;
 
     private Plane plane;
@@ -11,16 +10,21 @@ public class GridManager : MonoBehaviour {
 
     void Start() {
         showGrid = true;
-        
+
         plane = new Plane(Vector3.up, Vector3.zero);
         mainCamera = Camera.main;
     }
 
-    // Update is called once per frame
     void Update() {
-        if (showGrid) {
-            Vector3 mousePosition = Utils.CastRay(mainCamera, plane);
-            gridMask.transform.position = mousePosition;
+        if (!showGrid) return;
+        
+        Vector3 mousePosition = Utils.CastRay(mainCamera, plane);
+        if (Vector3.Distance(transform.position, mousePosition) > 25 && gridMask.activeSelf) {
+            gridMask.SetActive(false);
+        } else if (Vector3.Distance(transform.position, mousePosition) < 25 && !gridMask.activeSelf){
+            gridMask.SetActive(true);
         }
+
+        gridMask.transform.position = mousePosition;
     }
 }

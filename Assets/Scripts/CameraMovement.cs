@@ -23,7 +23,7 @@ public class CameraMovement : MonoBehaviour {
             currentTransform.position += movementDirection * movementSpeed;
         } else if (Input.GetKey(KeyCode.D)) {
             Vector3 movementDirection = Vector3.Cross(currentTransform.forward, Vector3.up);
-        currentTransform.position -= movementDirection * movementSpeed;
+            currentTransform.position -= movementDirection * movementSpeed;
         }
 
         if (currentTransform.position.x > lateralCameraLimit) {
@@ -56,6 +56,25 @@ public class CameraMovement : MonoBehaviour {
             currentTransform.position += Vector3.up * movementSpeed;
         } else if (Input.GetKey(KeyCode.LeftShift) && currentTransform.position.y > lowerCameraLimit) {
             currentTransform.position += Vector3.down * movementSpeed;
+        }
+    }
+
+    private float startTime;
+
+    private void Update() {
+        Transform currentTransform = transform;
+
+        float scrollDelta = Input.mouseScrollDelta.y;
+        if (scrollDelta == 0) return;
+
+        // startTime = Time.time;
+        Vector3 direction = Vector3.up + Vector3.Cross(Vector3.up, currentTransform.transform.right);
+
+        if ((scrollDelta > 0 && currentTransform.position.y > lowerCameraLimit) ||
+            (scrollDelta < 0 && currentTransform.position.y < upperCameraLimit)) {
+            currentTransform.Rotate(Vector3.left,3 * scrollDelta);
+            currentTransform.position -= direction * scrollDelta;
+            // currentTransform.position = Vector3.Lerp(direction * scrollDelta, currentTransform.position, i);
         }
     }
 }

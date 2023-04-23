@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Elements/Stylesheet.uss?fileID=7433441132597879392&amp;guid=07a66511f41b90742be9280469ee9e75&amp;type=3#Stylesheet" />
-    <ui:VisualElement class="container" style="width: 10%; max-width: 20%; min-width: 10%; height: auto; flex-direction: column; top: 50%;">
+    <ui:VisualElement class="container" style="width: 10%; max-width: 20%; min-width: 10%; height: auto; flex-direction: column; top: 0;">
         <ui:Label text="Build" display-tooltip-when-elided="true" style="align-items: auto; -unity-text-align: upper-center;" />
         <ui:Button text="Cube" display-tooltip-when-elided="true" name="buildCube" class="button" />
         <ui:Button text="Cylinder" display-tooltip-when-elided="true" name="buildCylinder" class="button" />

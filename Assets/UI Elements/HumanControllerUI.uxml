@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Elements/Stylesheet.uss?fileID=7433441132597879392&amp;guid=07a66511f41b90742be9280469ee9e75&amp;type=3#Stylesheet" />
+    <ui:VisualElement class="container" style="width: 125px; max-width: 25%; min-width: 10%; height: auto; flex-direction: column; top: auto; bottom: 0; position: absolute;">
+        <ui:Label text="Control" display-tooltip-when-elided="true" style="align-items: auto; -unity-text-align: upper-center;" />
+        <ui:Button text="Set Destination" display-tooltip-when-elided="true" name="setDestination" class="button" />
+        <ui:Button text="Select Humans" display-tooltip-when-elided="true" name="selectHumans" class="button" />
+    </ui:VisualElement>
+</ui:UXML>

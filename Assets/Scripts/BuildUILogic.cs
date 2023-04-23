@@ -35,29 +35,29 @@ public class BuildUILogic : MonoBehaviour {
             // This if else might be useless
             // We'll see when we add the models
             if (cubeSelected) {
-                if (Input.GetMouseButton((int)MouseButton.LeftMouse)) {
+                if (Input.GetMouseButtonDown((int)MouseButton.LeftMouse)) {
                     if (Place(currentPrefab)) {
-                        Select(null);
+                        Select("cube");
                     }
-                } else if (Input.GetKey(KeyCode.Escape) || Input.GetMouseButton((int)MouseButton.RightMouse)) {
+                } else if (Input.GetKey(KeyCode.Escape) || Input.GetMouseButtonDown((int)MouseButton.RightMouse)) {
                     Destroy(currentPrefab);
                     Select(null);
                 }
             } else if (cylinderSelected) {
-                if (Input.GetMouseButton((int)MouseButton.LeftMouse)) {
+                if (Input.GetMouseButtonDown((int)MouseButton.LeftMouse)) {
                     if (Place(currentPrefab)) {
-                        Select(null);
+                        Select("cylinder");
                     }
-                } else if (Input.GetKey(KeyCode.Escape) || Input.GetMouseButton((int)MouseButton.RightMouse)) {
+                } else if (Input.GetKey(KeyCode.Escape) || Input.GetMouseButtonDown((int)MouseButton.RightMouse)) {
                     Destroy(currentPrefab);
                     Select(null);
                 }
             } else if (sphereSelected) {
-                if (Input.GetMouseButton((int)MouseButton.LeftMouse)) {
+                if (Input.GetMouseButtonDown((int)MouseButton.LeftMouse)) {
                     if (Place(currentPrefab)) {
-                        Select(null);
+                        Select("sphere");
                     }
-                } else if (Input.GetKey(KeyCode.Escape) || Input.GetMouseButton((int)MouseButton.RightMouse)) {
+                } else if (Input.GetKey(KeyCode.Escape) || Input.GetMouseButtonDown((int)MouseButton.RightMouse)) {
                     Destroy(currentPrefab);
                     Select(null);
                 }

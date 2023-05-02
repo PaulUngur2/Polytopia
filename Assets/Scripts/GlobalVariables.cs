@@ -7,9 +7,9 @@ using System.Collections.Generic;
 public class GlobalVariables : MonoBehaviour {
     public static MapMatrix matrix;
     public static List<Human> selectedHumans;
+    
     private void Start() {
         matrix = new MapMatrix();
         selectedHumans = new List<Human>();
-    }
-    
+    }   
 }

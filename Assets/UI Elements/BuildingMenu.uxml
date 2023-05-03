@@ -1,9 +1,9 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Elements/Stylesheet.uss?fileID=7433441132597879392&amp;guid=07a66511f41b90742be9280469ee9e75&amp;type=3#Stylesheet" />
-    <ui:VisualElement class="container" style="width: 10%; max-width: 20%; min-width: 10%; height: auto; flex-direction: column; top: 0;">
-        <ui:Label text="Build" display-tooltip-when-elided="true" style="align-items: auto; -unity-text-align: upper-center;" />
-        <ui:Button text="Cube" display-tooltip-when-elided="true" name="buildCube" class="button" />
-        <ui:Button text="Cylinder" display-tooltip-when-elided="true" name="buildCylinder" class="button" />
-        <ui:Button text="Sphere" display-tooltip-when-elided="true" name="buildSphere" class="button" />
+    <ui:VisualElement name="VisualElement" class="container" style="width: 93px; max-width: 20%; min-width: 10%; height: 128px; flex-direction: column; top: 0; background-color: rgb(28, 28, 28); border-left-color: rgba(28, 28, 28, 255); border-right-color: rgba(28, 28, 28, 255); border-top-color: rgba(28, 28, 28, 255); border-bottom-color: rgba(28, 28, 28, 255); -unity-text-outline-color: rgb(28, 28, 28);">
+        <ui:Label text="Build" display-tooltip-when-elided="true" style="align-items: auto; -unity-text-align: upper-center; color: rgb(220, 220, 220);" />
+        <ui:Button text="Houses" display-tooltip-when-elided="true" name="buildHouses" class="button" style="background-color: rgb(47, 47, 47); color: rgb(220, 220, 220);" />
+        <ui:Button text="Farm" display-tooltip-when-elided="true" name="buildFarm" enable-rich-text="false" class="button" style="background-color: rgb(47, 47, 47); color: rgb(220, 220, 220);" />
+        <ui:Button text="Decorations" display-tooltip-when-elided="true" name="buildDecorations" class="button" style="background-color: rgb(47, 47, 47); -unity-background-image-tint-color: rgb(220, 220, 220); color: rgb(220, 220, 220);" />
     </ui:VisualElement>
 </ui:UXML>

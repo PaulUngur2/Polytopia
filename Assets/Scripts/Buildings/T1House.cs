@@ -3,7 +3,6 @@
     public T1House() 
     {
         NumberOfHumans = 3;
-        Decoration = false;
         TimeToBuild = 5;
         WoodCost = 5;
     }

@@ -3,7 +3,6 @@
     public T2House()
     {
         NumberOfHumans = 6;
-        Decoration = false;
         TimeToBuild = 10;
         WoodCost = 10;
         StoneCost = 5;

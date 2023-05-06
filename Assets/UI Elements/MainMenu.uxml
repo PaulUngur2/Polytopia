@@ -1,9 +1,9 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Elements/Stylesheet.uss?fileID=7433441132597879392&amp;guid=07a66511f41b90742be9280469ee9e75&amp;type=3#Stylesheet" />
-    <ui:VisualElement style="flex-grow: 1; justify-content: flex-start;">
-        <ui:VisualElement style="flex-basis: 20%; align-items: center; justify-content: space-around; top: 25%;">
-            <ui:Button text="Play" display-tooltip-when-elided="true" name="PlayButton" class="button" />
-            <ui:Button text="Exit" display-tooltip-when-elided="true" name="ExitButton" class="button" />
+    <ui:VisualElement style="flex-grow: 1; justify-content: flex-start; height: 400px; width: 300px; background-color: rgba(89, 89, 89, 0.9);">
+        <ui:VisualElement style="flex-basis: 20%; align-items: center; justify-content: space-around; top: 25%; height: 195px;">
+            <ui:Button text="Play" display-tooltip-when-elided="true" name="PlayButton" class="button" style="width: 50%; background-color: rgb(43, 43, 43); color: rgb(255, 255, 255);" />
+            <ui:Button text="Exit" display-tooltip-when-elided="true" name="ExitButton" class="button" style="width: 50%; background-color: rgb(43, 43, 43); color: rgb(255, 255, 255);" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

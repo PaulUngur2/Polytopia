@@ -3,7 +3,6 @@
     public T1Farm()
     {
         NumberOfHumans = 1;
-        Decoration = false;
         TimeToBuild = 5;
         WoodCost = 2;
     }

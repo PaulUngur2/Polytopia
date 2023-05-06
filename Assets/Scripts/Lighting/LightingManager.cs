@@ -7,14 +7,15 @@ public class LightingManager : MonoBehaviour {
 
     [Range(0,24)] 
     public float timeOfDay = 12;
+    public int timeSpeed = 2;
 
     private void Update() {
         if (Application.isPlaying) {
-            timeOfDay += Time.deltaTime;
-            timeOfDay %= 24; // Clamp between 0-24
-            UpdateLighting(timeOfDay / 24);
+            timeOfDay += Time.deltaTime/ timeSpeed;
+            timeOfDay %= 24 ; // Clamp between 0-24
+            UpdateLighting(timeOfDay / (24));
         } else {
-            UpdateLighting(timeOfDay / 24);
+            UpdateLighting(timeOfDay / (24));
         }
     }
 

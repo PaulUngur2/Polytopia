@@ -8,7 +8,6 @@ public abstract class Building : MonoBehaviour
     protected int StoneCost { get; set; }
     protected int MetalCost { get; set; }
     
-
     public abstract void DisplayUI();
     public abstract int[] GetCost();
     public abstract bool CheckLivingSpace(int currentNumberOfHumans);

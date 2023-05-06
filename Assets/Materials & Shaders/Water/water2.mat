@@ -36,15 +36,20 @@ Material:
     m_Floats:
     - _Amount: 1
     - _Cut_Off: 1
-    - _Depth: 7.3
+    - _Depth: 8.75
+    - _Displacement: 1
+    - _Foam_Scale: 100
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Refraction_Strength: 1
     - _Scale: 2
     - _Scale_1: 100
+    - _Smotthnes: 0.8
     - _Speed: 0.1
     - _Speed_Foam: 1
     - _Strength: 0.023
     - _Strength_1: 2
+    - _Wave_Speed: 2
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Deep_Water: {r: 0, g: 0.17043008, b: 0.9716981, a: 0.4745098}

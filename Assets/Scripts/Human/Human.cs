@@ -5,8 +5,7 @@ using UnityEngine;
 public class Human : MonoBehaviour
 {
     private bool selected;
-    private Transform destination;
-    private Renderer renderer;
+    private Renderer render;
     public UnityEngine.AI.NavMeshAgent agent;
     private Camera mainCamera;
     void Awake()
@@ -16,10 +15,13 @@ public class Human : MonoBehaviour
     void Start()
     {
         selected = false;
-        renderer = GetComponent<Renderer>();
+        render = GetComponent<Renderer>();
+        Material[] materials = render.materials;
     }
+
     void Update()
     {
+        transform.rotation = Quaternion.Euler(-90, 0, 0);
         if (HumansControllerUI.setDestination && selected)
         {
             if (Input.GetMouseButtonDown(1))
@@ -41,14 +43,33 @@ public class Human : MonoBehaviour
             if (!selected)
             {
                 selected = true;
-                renderer.material.color = Color.red;
+                Material[] materials = render.materials;
+                foreach (Material material in materials)
+                {
+                    // Store the original color of the material
+                    material.SetColor("_OriginalColor", material.color);
+                
+                    // Make the material redder
+                    Color newColor = material.color + new Color(0.2f, 0f, 0f);
+                    material.color = newColor;
+                }
                 GlobalVariables.selectedHumans.Add(this);
-            } else if (selected)
+            }
+            else
             {
                 selected = false;
-                renderer.material.color = Color.white;
+                Material[] materials = render.materials;
+                foreach (Material material in materials)
+                {
+                    // Restore the original color of the material
+                    Color originalColor = material.GetColor("_OriginalColor");
+                    material.color = originalColor;
+                }
                 GlobalVariables.selectedHumans.Remove(this);
             }
         }
     }
+
+
+
 }

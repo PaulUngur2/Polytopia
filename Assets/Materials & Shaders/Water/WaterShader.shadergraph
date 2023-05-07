@@ -233,7 +233,7 @@
                 "m_Node": {
                     "m_Id": "19528605eeaa4342b043ab32291392d2"
                 },
-                "m_SlotId": 1
+                "m_SlotId": 2
             }
         },
         {
@@ -297,13 +297,13 @@
                 "m_Node": {
                     "m_Id": "30a48acdd5064a86b06d65887bcb8894"
                 },
-                "m_SlotId": 3
+                "m_SlotId": 2
             },
             "m_InputSlot": {
                 "m_Node": {
                     "m_Id": "19528605eeaa4342b043ab32291392d2"
                 },
-                "m_SlotId": 2
+                "m_SlotId": 1
             }
         },
         {
@@ -1584,7 +1584,7 @@
     "m_Group": {
         "m_Id": ""
     },
-    "m_Name": "DepthFade",
+    "m_Name": "Depth Fade",
     "m_DrawState": {
         "m_Expanded": true,
         "m_Position": {

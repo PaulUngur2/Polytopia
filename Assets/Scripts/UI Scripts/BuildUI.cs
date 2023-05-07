@@ -1,11 +1,22 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine.UIElements;
 using UnityEngine;
 
 public class BuildUI : MonoBehaviour
 {
+    public GameObject t1House;
+    public GameObject t2House;
+    public GameObject t1Farm;
+    public GameObject t2Farm;
+    public GameObject streetLamp;
+
+    private GameObject currentPrefab;
+    private Camera mainCamera;
+    private Plane plane;
+
     private VisualElement root;
+    private VisualElement scrollView;
     private List<VisualElement> tabs;
     private List<Button> tabButtons;
 
@@ -13,8 +24,41 @@ public class BuildUI : MonoBehaviour
 
     public void Start()
     {
-        root = GetComponent<UIDocument>().rootVisualElement;
+        mainCamera = Camera.main;
+        plane = new Plane(Vector3.up, Vector3.zero);
+    }
 
+    public void Update()
+    {
+        if (GlobalVariables.buildActive)
+        {
+            Vector3 mousePosition = Utils.CastRay(mainCamera, plane);
+            mousePosition.x = (float)Math.Round(mousePosition.x);
+            mousePosition.z = (float)Math.Round(mousePosition.z);
+            currentPrefab.transform.position = mousePosition;
+
+            float scrollDelta = Input.mouseScrollDelta.y;
+            if (scrollDelta != 0)
+            {
+                currentPrefab.transform.Rotate(Vector3.up, 90 * scrollDelta);
+            }
+            
+            if (Input.GetMouseButton((int)MouseButton.LeftMouse)) {
+                if (Place(currentPrefab)) {
+                    Select(null);
+                }
+            } else if (Input.GetKey(KeyCode.Escape) || Input.GetMouseButtonDown((int)MouseButton.RightMouse)) {
+                Destroy(currentPrefab);
+                Select(null);
+            }
+        }
+    }
+
+    public void OnEnable()
+    {
+        root = GetComponent<UIDocument>().rootVisualElement;
+        scrollView = root.Q<VisualElement>("ScrollView");
+        
         VisualElement tab1 = root.Q<VisualElement>("tab1");
         VisualElement tab2 = root.Q<VisualElement>("tab2");
         VisualElement tab3 = root.Q<VisualElement>("tab3");
@@ -32,6 +76,18 @@ public class BuildUI : MonoBehaviour
         }
 
         ToggleDisplay(activeTabIndex);
+
+        Button t1HouseButton = root.Q<Button>("T1house");
+        Button t2HouseButton = root.Q<Button>("T2house");
+        Button t1FarmButton = root.Q<Button>("T1farm");
+        Button t2FarmButton = root.Q<Button>("T2farm");
+        Button streetLampButton = root.Q<Button>("StreetLamp");
+
+        t1HouseButton.clicked += () => Select("T1 House");
+        t2HouseButton.clicked += () => Select("T2 House");
+        t1FarmButton.clicked += () => Select("T1 Farm");
+        t2FarmButton.clicked += () => Select("T2 Farm");
+        streetLampButton.clicked += () => Select("Street Lamp");
     }
 
     void ToggleDisplay(int index)
@@ -40,6 +96,7 @@ public class BuildUI : MonoBehaviour
         {
             // Clicked on active tab, hide buttons
             tabs[index].style.display = DisplayStyle.None;
+            scrollView.style.display = DisplayStyle.None;
             tabButtons[index].style.backgroundColor = new Color(0.22f, 0.22f, 0.22f);
             activeTabIndex = -1;
         }
@@ -58,9 +115,55 @@ public class BuildUI : MonoBehaviour
                     tabs[i].style.display = DisplayStyle.None;
                     tabButtons[i].style.backgroundColor = new Color(0.22f, 0.22f, 0.22f);
                 }
+                
             }
 
+            scrollView.style.display = DisplayStyle.Flex;
             activeTabIndex = index;
         }
+    }
+
+    void Select(String prefab)
+    {
+        if (prefab == "T1 House")
+        {
+            currentPrefab = Instantiate(t1House, Utils.CastRay(mainCamera, plane), Quaternion.identity);
+        }
+        else if (prefab == "T2 House")
+        {
+            currentPrefab = Instantiate(t2House, Utils.CastRay(mainCamera, plane), Quaternion.identity);
+        }
+        else if (prefab == "T1 Farm")
+        {
+            currentPrefab = Instantiate(t1Farm, Utils.CastRay(mainCamera, plane), Quaternion.identity);
+        }
+        else if (prefab == "T2 Farm")
+        {
+            currentPrefab = Instantiate(t2Farm, Utils.CastRay(mainCamera, plane), Quaternion.identity);
+        }
+        else if (prefab == "Street Lamp")
+        {
+            currentPrefab = Instantiate(streetLamp, Utils.CastRay(mainCamera, plane), Quaternion.identity);
+        }
+        else
+        {
+            GlobalVariables.buildActive = false;
+            return;
+        }
+
+        GlobalVariables.buildActive = true;
+    }
+
+    private bool Place(GameObject prefab)
+    {
+        Bounds bounds = prefab.GetComponent<Collider>().bounds;
+
+        if (GlobalVariables.matrix.CanPlace(bounds))
+        {
+            GlobalVariables.matrix.AddOccupiedTiles(bounds);
+            return true;
+        }
+
+        return false;
     }
 }

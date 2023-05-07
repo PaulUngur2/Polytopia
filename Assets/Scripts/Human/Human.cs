@@ -21,7 +21,6 @@ public class Human : MonoBehaviour
 
     void Update()
     {
-        transform.rotation = Quaternion.Euler(-90, 0, 0);
         if (HumansControllerUI.setDestination && selected)
         {
             if (Input.GetMouseButtonDown(1))

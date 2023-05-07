@@ -8,6 +8,7 @@ public class BuildUI : MonoBehaviour
     private VisualElement root;
     private List<VisualElement> tabs;
     private List<Button> tabButtons;
+    private int selectedIndex = 0;
 
     void Start() {
         root = GetComponent<UIDocument>().rootVisualElement;
@@ -25,7 +26,22 @@ public class BuildUI : MonoBehaviour
         for (int i = 0; i < tabButtons.Count; i++)
         {
             int index = i;
-            tabButtons[i].clicked += () => ToggleDisplay(tabs[index]);
+            tabButtons[i].clicked += () => {
+                ToggleDisplay(tabs[index]);
+                UpdateButtonColors(index);
+            };
+        }
+    }
+
+    void UpdateButtonColors(int newIndex)
+    {
+
+        tabButtons[newIndex].style.backgroundColor = new StyleColor(new Color(0.35f, 0.35f, 0.35f));
+        
+        if (selectedIndex != newIndex)
+        {
+            tabButtons[selectedIndex].style.backgroundColor = new StyleColor(new Color(0.2f, 0.2f, 0.2f));
+            selectedIndex = newIndex;
         }
     }
 
@@ -37,12 +53,11 @@ public class BuildUI : MonoBehaviour
             if (i == index)
             {
                 tabs[i].style.display = DisplayStyle.Flex;
-                tabs[i].style.backgroundColor = new Color(0.35f, 0.35f, 0.35f);
             }
             else
             {
                 tabs[i].style.display = DisplayStyle.None;
-                tabs[i].style.backgroundColor = new Color(0.22f, 0.22f, 0.22f);
+                
             }
         }
     }

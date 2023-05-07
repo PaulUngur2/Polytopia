@@ -12,6 +12,7 @@ public class BuildUILogic : MonoBehaviour {
     private bool cylinderSelected;
     private bool sphereSelected;
 
+    private VisualElement root;
     private GameObject currentPrefab;
     private Camera mainCamera;
     private Plane plane;
@@ -37,7 +38,7 @@ public class BuildUILogic : MonoBehaviour {
             if (cubeSelected) {
                 if (Input.GetMouseButtonDown((int)MouseButton.LeftMouse)) {
                     if (Place(currentPrefab)) {
-                        Select("cube");
+                        Select(null);
                     }
                 } else if (Input.GetKey(KeyCode.Escape) || Input.GetMouseButtonDown((int)MouseButton.RightMouse)) {
                     Destroy(currentPrefab);
@@ -46,7 +47,7 @@ public class BuildUILogic : MonoBehaviour {
             } else if (cylinderSelected) {
                 if (Input.GetMouseButtonDown((int)MouseButton.LeftMouse)) {
                     if (Place(currentPrefab)) {
-                        Select("cylinder");
+                        Select(null);
                     }
                 } else if (Input.GetKey(KeyCode.Escape) || Input.GetMouseButtonDown((int)MouseButton.RightMouse)) {
                     Destroy(currentPrefab);
@@ -55,7 +56,7 @@ public class BuildUILogic : MonoBehaviour {
             } else if (sphereSelected) {
                 if (Input.GetMouseButtonDown((int)MouseButton.LeftMouse)) {
                     if (Place(currentPrefab)) {
-                        Select("sphere");
+                        Select(null);
                     }
                 } else if (Input.GetKey(KeyCode.Escape) || Input.GetMouseButtonDown((int)MouseButton.RightMouse)) {
                     Destroy(currentPrefab);
@@ -66,12 +67,12 @@ public class BuildUILogic : MonoBehaviour {
     }
 
     private void OnEnable() {
-        VisualElement root = GetComponent<UIDocument>().rootVisualElement;
+        root = GetComponent<UIDocument>().rootVisualElement;
 
         Button buildCube = root.Q<Button>("buildCube");
         Button buildCylinder = root.Q<Button>("buildCylinder");
         Button buildSphere = root.Q<Button>("buildSphere");
-
+        
         buildCube.clicked += () => Select("cube");
         buildCylinder.clicked += () => Select("cylinder");
         buildSphere.clicked += () => Select("sphere");

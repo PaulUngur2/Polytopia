@@ -8,6 +8,7 @@ public class BuildUI : MonoBehaviour
     private VisualElement root;
     private List<VisualElement> tabs;
     private List<Button> tabButtons;
+
     private int activeTabIndex = 0;
 
     public void Start()

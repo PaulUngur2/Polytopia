@@ -8,9 +8,11 @@ public class BuildUI : MonoBehaviour
     private VisualElement root;
     private List<VisualElement> tabs;
     private List<Button> tabButtons;
-    private int selectedIndex = 0;
 
-    void Start() {
+    private int activeTabIndex = 0;
+
+    public void Start()
+    {
         root = GetComponent<UIDocument>().rootVisualElement;
 
         VisualElement tab1 = root.Q<VisualElement>("tab1");
@@ -26,39 +28,39 @@ public class BuildUI : MonoBehaviour
         for (int i = 0; i < tabButtons.Count; i++)
         {
             int index = i;
-            tabButtons[i].clicked += () => {
-                ToggleDisplay(tabs[index]);
-                UpdateButtonColors(index);
-            };
+            tabButtons[i].clicked += () => ToggleDisplay(index);
         }
+
+        ToggleDisplay(activeTabIndex);
     }
 
-    void UpdateButtonColors(int newIndex)
+    void ToggleDisplay(int index)
     {
-
-        tabButtons[newIndex].style.backgroundColor = new StyleColor(new Color(0.35f, 0.35f, 0.35f));
-        
-        if (selectedIndex != newIndex)
+        if (index == activeTabIndex && tabs[index].style.display == DisplayStyle.Flex)
         {
-            tabButtons[selectedIndex].style.backgroundColor = new StyleColor(new Color(0.2f, 0.2f, 0.2f));
-            selectedIndex = newIndex;
+            // Clicked on active tab, hide buttons
+            tabs[index].style.display = DisplayStyle.None;
+            tabButtons[index].style.backgroundColor = new Color(0.22f, 0.22f, 0.22f);
+            activeTabIndex = -1;
         }
-    }
-
-    void ToggleDisplay(VisualElement container)
-    {
-        int index = tabs.IndexOf(container);
-        for (int i = 0; i < tabs.Count; i++)
+        else
         {
-            if (i == index)
+            // Clicked on inactive tab, show tab and hide other tabs
+            for (int i = 0; i < tabs.Count; i++)
             {
-                tabs[i].style.display = DisplayStyle.Flex;
+                if (i == index)
+                {
+                    tabs[i].style.display = DisplayStyle.Flex;
+                    tabButtons[i].style.backgroundColor = new Color(0.35f, 0.35f, 0.35f);
+                }
+                else
+                {
+                    tabs[i].style.display = DisplayStyle.None;
+                    tabButtons[i].style.backgroundColor = new Color(0.22f, 0.22f, 0.22f);
+                }
             }
-            else
-            {
-                tabs[i].style.display = DisplayStyle.None;
-                
-            }
+
+            activeTabIndex = index;
         }
     }
 }

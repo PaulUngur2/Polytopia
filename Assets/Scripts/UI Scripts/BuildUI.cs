@@ -25,7 +25,7 @@ public class BuildUI : MonoBehaviour
     public void Start()
     {
         mainCamera = Camera.main;
-        plane = new Plane(Vector3.up, Vector3.zero);
+        plane = new Plane(Vector3.up, new Vector3(0,-0.5f,0));
     }
 
     public void Update()
@@ -94,7 +94,6 @@ public class BuildUI : MonoBehaviour
     {
         if (index == activeTabIndex && tabs[index].style.display == DisplayStyle.Flex)
         {
-            // Clicked on active tab, hide buttons
             tabs[index].style.display = DisplayStyle.None;
             scrollView.style.display = DisplayStyle.None;
             tabButtons[index].style.backgroundColor = new Color(0.22f, 0.22f, 0.22f);
@@ -102,7 +101,6 @@ public class BuildUI : MonoBehaviour
         }
         else
         {
-            // Clicked on inactive tab, show tab and hide other tabs
             for (int i = 0; i < tabs.Count; i++)
             {
                 if (i == index)

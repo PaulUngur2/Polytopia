@@ -972,6 +972,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b85a7e76b64b5f94a9156e4cea607e61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  t1House: {fileID: 0}
+  t2House: {fileID: 0}
+  t1Farm: {fileID: 0}
+  t2Farm: {fileID: 0}
+  streetLamp: {fileID: 0}
 --- !u!114 &2081066123
 MonoBehaviour:
   m_ObjectHideFlags: 0

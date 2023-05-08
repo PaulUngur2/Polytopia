@@ -2,7 +2,7 @@
 using UnityEngine;
 
 public class MapMatrix {
-    private const int MAP_SIZE = 100;
+    private const int MAP_SIZE = 200;
     private readonly Tile[,] occupiedTiles;
 
     public MapMatrix() {

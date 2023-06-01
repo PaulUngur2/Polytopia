@@ -8,14 +8,14 @@ public class GlobalVariables : MonoBehaviour
 {
     public static bool buildActive;
     public static MapMatrix matrix;
-    public static List<Human> selectedHumans;
+    public static List<Human> Humans;
     public static List<Building> buildings;
 
-    private void Start()
+    private void Awake()
     {
         buildActive = false;
         matrix = new MapMatrix();
-        selectedHumans = new List<Human>();
+        Humans = new List<Human>();
         buildings = new List<Building>();
     }
 }

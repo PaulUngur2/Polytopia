@@ -7,6 +7,7 @@ public abstract class Building : MonoBehaviour
     protected int WoodCost { get; set; }
     protected int StoneCost { get; set; }
     protected int MetalCost { get; set; }
+    protected Vector3 Location { get; set; }
     
     public abstract void DisplayUI();
     public abstract int[] GetCost();

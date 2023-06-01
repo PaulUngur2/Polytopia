@@ -4,19 +4,22 @@ using UnityEngine;
 public class Human : MonoBehaviour
 {
     public float stoppingDistance = 1f;
-    private bool selected;
     private Renderer render;
     public UnityEngine.AI.NavMeshAgent agent;
     private Camera mainCamera;
     private Material[] materials;
     private Color[] HairColors;
+    private Vector3 startDestination;
+    private Vector3 endDestination;
+    public bool available { get; set; }
+
     void Awake()
     {
         mainCamera = FindObjectOfType<Camera> ();
     }
     void Start()
     {
-        selected = false;
+        available = true;
         render = GetComponent<Renderer>();
         Material[] materials = render.materials;
         materials[0].color = Random.ColorHSV();
@@ -29,9 +32,10 @@ public class Human : MonoBehaviour
             Color.Lerp(new Color(255f/255f, 217f/255f, 0f/255f), new Color(255f/255f, 236f/255f, 160f/255f), Random.Range(0f, 1f)),
         };
         materials[4].color = HairColors[Random.Range(0, HairColors.Length)];
+        GlobalVariables.Humans.Add(this);
     }
 
-    void Update()
+    /*void Update()
     {
         setDestination();
         
@@ -44,9 +48,9 @@ public class Human : MonoBehaviour
                 agent.isStopped = true;
             }
         }
-    }
+    }*/
 
-    public void OnMouseDown()
+    /*public void OnMouseDown()
     {
         if (!selected)
         {
@@ -57,24 +61,14 @@ public class Human : MonoBehaviour
                 unselecting();
             }
         
-    }
+    }*/
     
-    public void setDestination()
+    public void SetDestination(Vector3 destination)
     {
-        if (selected && Input.GetMouseButtonDown(0))
-        {
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
-            {
-                agent.isStopped = false;
-                agent.SetDestination(hit.point);
-            }
-        }
-
+        agent.SetDestination(destination);
     }
 
-    public void unselecting()
+    /*public void unselecting()
     {
         selected = false;
         materials = render.materials;
@@ -101,5 +95,5 @@ public class Human : MonoBehaviour
             material.color = newColor;
         }
         GlobalVariables.selectedHumans.Add(this);
-    }
+    }*/
 }

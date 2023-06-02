@@ -117,4 +117,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43d0f72ea27c5f049ab71ef1323a0434, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stoppingDistance: 1
   agent: {fileID: -9028514091189561849}

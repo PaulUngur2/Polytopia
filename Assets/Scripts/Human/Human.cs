@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 public class Human : MonoBehaviour
 {
     public float stoppingDistance = 1f;
@@ -67,7 +68,8 @@ public class Human : MonoBehaviour
     {
         agent.SetDestination(destination);
     }
-
+    
+    
     /*public void unselecting()
     {
         selected = false;

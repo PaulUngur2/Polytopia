@@ -4,18 +4,15 @@ using UnityEngine;
 public class LightingManager : MonoBehaviour {
     public Light directionalLight;
     public LightingPreset preset;
-
-    [Range(0,24)] 
-    public float timeOfDay = 12;
     public int timeSpeed = 2;
 
     private void Update() {
         if (Application.isPlaying) {
-            timeOfDay += Time.deltaTime/ timeSpeed;
-            timeOfDay %= 24 ; // Clamp between 0-24
-            UpdateLighting(timeOfDay / (24));
+            GlobalVariables.currentTime += Time.deltaTime/ timeSpeed;
+            GlobalVariables.currentTime %= 24 ; // Clamp between 0-24
+            UpdateLighting(GlobalVariables.currentTime / (24));
         } else {
-            UpdateLighting(timeOfDay / (24));
+            UpdateLighting(GlobalVariables.currentTime / (24));
         }
     }
 

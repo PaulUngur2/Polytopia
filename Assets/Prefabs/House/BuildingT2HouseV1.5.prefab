@@ -204,7 +204,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6e50f69a3c092c84ba3e7f4df48ba2c5, type: 3}
       propertyPath: m_TagString
-      value: Obstacle
+      value: House
       objectReference: {fileID: 0}
     - target: {fileID: 1066235068171334618, guid: 6e50f69a3c092c84ba3e7f4df48ba2c5, type: 3}
       propertyPath: m_RootOrder

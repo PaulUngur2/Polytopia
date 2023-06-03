@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 
 public class Forest : Resources
 {
+    private Human currentHuman;
     public Forest()
     {
         NumberOfHumans = 20;
@@ -19,12 +21,12 @@ public class Forest : Resources
         return TypeOfResource;
     }
 
-    public override int GetResourceAmount(int currentNumberOfHumans)
+    public override int GetResourceAmount(float workedHours)
     {
         var totalResources = 0;
         var random = new Random();
 
-        for (var i = 0; i < currentNumberOfHumans; i++)
+        for (var i = 0; i < workedHours; i++)
         {
             var randomNumber = random.Next(1, 11);
             
@@ -41,5 +43,20 @@ public class Forest : Resources
         NumberOfResources -= totalResources;
         
         return totalResources;
+    }
+    
+    public override void OnInteract(int idHuman)
+    {
+        if (GlobalVariables.currentTime > 6 && GlobalVariables.currentTime < 18)
+        {
+            currentHuman = GlobalVariables.humans.FirstOrDefault(h => h.id == idHuman);
+
+            if (currentHuman != null)
+            {
+                var hoursWorked = GlobalVariables.currentTime - 6;
+                
+                GlobalVariables.resources[TypeOfResource] += GetResourceAmount(hoursWorked);
+            }
+        }
     }
 }

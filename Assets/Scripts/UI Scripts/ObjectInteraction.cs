@@ -1,27 +1,19 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-using System.Linq;
 
 
 public class ObjectInteraction : MonoBehaviour
 {
     public VisualTreeAsset uiAsset;
-    protected VisualElement uiElement;
-    protected Button cancelButton;
-    protected Button interactButton;
+    private VisualElement uiElement;
+    private Button cancelButton;
+    private Button interactButton;
     private bool isMouseOver;
-    private bool isSelected;
-    private Renderer render;
-    private Material[] materials;
-    private Building building;
-    private Dictionary<string, string> buildingFunctions = new Dictionary<string, string>()
-    {
-        { "House", "Sleep" },
-        { "Farm", "Work" },
-        { "Resources", "Collect" },
-    };
+    private Renderer[] childRenderers;
+    private Color[] originalColors;
+    //private bool isSelected;
+    private Renderer objectRenderer;
+    private Color originalObjectColor;
 
     void Start()
     {
@@ -29,16 +21,32 @@ public class ObjectInteraction : MonoBehaviour
         uiElement = uiAsset.CloneTree();
         uiElement.style.display = DisplayStyle.None;
         
-        isSelected = false;
-        render = GetComponent<Renderer>();
-        Material[] materials = render.materials;
+        //isSelected = false;
+        // Check if the prefab has child objects
+        if (transform.childCount > 0)
+        {
+            // Get all child mesh renderers
+            childRenderers = GetComponentsInChildren<Renderer>();
+
+            // Store the original colors of each child renderer
+            originalColors = new Color[childRenderers.Length];
+            for (int i = 0; i < childRenderers.Length; i++)
+            {
+                originalColors[i] = childRenderers[i].material.color;
+            }
+        }
+        else
+        {
+            // Get the renderer and store the original color
+            objectRenderer = GetComponent<Renderer>();
+            originalObjectColor = objectRenderer.material.color;
+        }
         
         interactButton = uiElement.Q<Button>("Interact");
         if (interactButton != null)
         {
             // Register a click event listener for the button
             interactButton.clickable.clicked += OnInteractButtonClicked;
-            uiElement.style.display = DisplayStyle.None;
         }
 
         // Find the button with the "Cancel" id
@@ -54,28 +62,22 @@ public class ObjectInteraction : MonoBehaviour
         root.Add(uiElement);
     }
 
+    void OnMouseEnter()
+    {
+        isMouseOver = true;
+    }
+
+    void OnMouseExit()
+    {
+        isMouseOver = false;
+    }
+
     void Update()
     {
         // Show the UI element at the position of the mouse cursor when the game object is clicked using the mouse scroll button
         if (isMouseOver && Input.GetMouseButtonDown(2))
         {
-            if (isSelected)
-            {
-                DeSelected();
-            } else {
-                Selected();
-            }
-            
-            interactButton = uiElement.Q<Button>("Interact");
-
-            foreach (KeyValuePair<string, string> kvp in buildingFunctions)
-            {
-                if (gameObject.name.Contains(kvp.Key))
-                {
-                    interactButton.text = kvp.Value;
-                    break;
-                }
-            }
+            Selected();
 
             uiElement.style.position = Position.Absolute;
             uiElement.style.left = Input.mousePosition.x;
@@ -83,61 +85,75 @@ public class ObjectInteraction : MonoBehaviour
             uiElement.style.display = DisplayStyle.Flex;
         }
     }
-    
-    private void Selected()
+
+    void Selected()
     {
-        isSelected = true;
-        materials = render.materials;
-        foreach (Material material in materials)
+        //isSelected = true;
+
+        if (childRenderers != null)
         {
-            // Store the original color of the material
-            material.SetColor("_OriginalColor", material.color);
-                
-            // Make the material redder
-            Color newColor = material.color + new Color(0.2f, 0f, 0f);
-            material.color = newColor;
+            // The prefab has child objects with individual renderers
+            for (int i = 0; i < childRenderers.Length; i++)
+            {
+                // Set a reddish color (you can adjust the values to get the desired shade of red)
+                childRenderers[i].material.color = originalColors[i] + new Color(0.2f, 0f, 0f);
+            }
+        }
+        else if (objectRenderer != null)
+        {
+            // Set a reddish color
+            objectRenderer.material.color = originalObjectColor + new Color(0.2f, 0f, 0f);
         }
     }
-    
-    private void DeSelected()
+
+    void DeSelected()
     {
-        isSelected = false;
-        materials = render.materials;
-        foreach (Material material in materials)
+        //isSelected = false;
+        if (childRenderers != null)
         {
-            // Restore the original color of the material
-            Color originalColor = material.GetColor("_OriginalColor");
-            material.color = originalColor;
+            // The prefab has child objects with individual renderers
+            for (int i = 0; i < childRenderers.Length; i++)
+            {
+                // Restore the original color
+                childRenderers[i].material.color = originalColors[i];
+            }
+        }
+        else if (objectRenderer != null)
+        {
+            // Restore the original color
+            objectRenderer.material.color = originalObjectColor;
         }
     }
 
     private void OnInteractButtonClicked()
     {
-        foreach (Human human in GlobalVariables.humans)
+        foreach (Human human in GlobalVariables.Humans)
         {
-            if (human.available)
+            if(human.available)
             {
-                human.SetDestination(transform.position, human.id);
+                Vector3 destination = Vector3.zero;
+                if (childRenderers != null)
+                {
+                    destination = transform.GetChild(0).position;
+                } else if (objectRenderer != null)
+                {
+                    destination = transform.position;
+                }
+
+                Debug.Log("Human available " + destination);
+                human.SetDestination(destination);
                 human.available = false;
-                gameObject.GetComponent<Building>().OnInteract(human.id);
                 break;
             }
         }
+        uiElement.style.display = DisplayStyle.None;
+        DeSelected();
     }
 
     private void OnCancelButtonClicked()
     {
         // Hide the UI element when the Cancel button is clicked
         uiElement.style.display = DisplayStyle.None;
-    }
-    
-    private void OnMouseEnter()
-    {
-        isMouseOver = true;
-    }
-
-    private void OnMouseExit()
-    {
-        isMouseOver = false;
+        DeSelected();
     }
 }

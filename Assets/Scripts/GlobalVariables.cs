@@ -32,8 +32,12 @@ public class GlobalVariables : MonoBehaviour
     }
 
     private void Start()
-    {
-        housings.Add(new Housing(GameObject.FindGameObjectWithTag("House"),2, new List<int>() {0, 1}));
-        housingCapacity += 2;
+    {   GameObject[] houseObjects = GameObject.FindGameObjectsWithTag("House");
+        int i = 1;
+        foreach (var house in houseObjects)
+        {   
+            housings.Add(new Housing(house,3, new List<int>() {i}));
+            housingCapacity += 3;
+        }
     }
 }

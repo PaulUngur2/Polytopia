@@ -8,5 +8,6 @@ public abstract class Resources : MonoBehaviour
     
     public abstract void DisplayUI();
     public abstract string GetResourceType();
-    public abstract int GetResourceAmount(int currentNumberOfHumans);
+    public abstract int GetResourceAmount(float workedHours);
+    public abstract void OnInteract(int idHuman);
 }

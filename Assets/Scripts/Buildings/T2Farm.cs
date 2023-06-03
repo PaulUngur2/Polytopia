@@ -1,5 +1,8 @@
-﻿public class T2Farm : Building
+﻿using System.Linq;
+
+public class T2Farm : Building
 {
+    private Human currentHuman;
     public T2Farm()
     {
         NumberOfHumans = 2;
@@ -29,6 +32,14 @@
     
     public override void OnInteract(int idHuman)
     {
-        throw new System.NotImplementedException();
+        if (GlobalVariables.currentTime > 6 && GlobalVariables.currentTime < 18)
+        {
+            currentHuman = GlobalVariables.humans.FirstOrDefault(h => h.id == idHuman);
+
+            if (currentHuman != null)
+            {
+                GlobalVariables.resources["Food"] += 2;
+            }
+        }
     }
 }

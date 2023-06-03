@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Collections.Generic;
 
 
 public class ObjectInteraction : MonoBehaviour
@@ -11,18 +12,22 @@ public class ObjectInteraction : MonoBehaviour
     private bool isMouseOver;
     private Renderer[] childRenderers;
     private Color[] originalColors;
-    //private bool isSelected;
     private Renderer objectRenderer;
     private Color originalObjectColor;
+    private Dictionary<string, string> buildingFunctions = new Dictionary<string, string>()
+    {
+        { "House", "WIP" },
+        { "Farm", "Work" },
+        { "Forest", "Collect Wood" },
+        { "Metal", "Collect Metal" },
+        { "Stone", "Collect Stone" }
+    };
 
     void Start()
     {
-        // Load the UI element defined in the UXML file
         uiElement = uiAsset.CloneTree();
         uiElement.style.display = DisplayStyle.None;
         
-        //isSelected = false;
-        // Check if the prefab has child objects
         if (transform.childCount > 0)
         {
             // Get all child mesh renderers
@@ -61,23 +66,24 @@ public class ObjectInteraction : MonoBehaviour
         var root = GetComponent<UIDocument>().rootVisualElement;
         root.Add(uiElement);
     }
-
-    void OnMouseEnter()
-    {
-        isMouseOver = true;
-    }
-
-    void OnMouseExit()
-    {
-        isMouseOver = false;
-    }
-
+    
     void Update()
     {
         // Show the UI element at the position of the mouse cursor when the game object is clicked using the mouse scroll button
         if (isMouseOver && Input.GetMouseButtonDown(2))
         {
             Selected();
+
+            interactButton = uiElement.Q<Button>("Interact");
+
+            foreach (KeyValuePair<string, string> kvp in buildingFunctions)
+            {
+                if (gameObject.name.Contains(kvp.Key))
+                {
+                    interactButton.text = kvp.Value;
+                    break;
+                }
+            }
 
             uiElement.style.position = Position.Absolute;
             uiElement.style.left = Input.mousePosition.x;
@@ -86,7 +92,7 @@ public class ObjectInteraction : MonoBehaviour
         }
     }
 
-    void Selected()
+    private void Selected()
     {
         //isSelected = true;
 
@@ -106,7 +112,7 @@ public class ObjectInteraction : MonoBehaviour
         }
     }
 
-    void DeSelected()
+    private void DeSelected()
     {
         //isSelected = false;
         if (childRenderers != null)
@@ -127,23 +133,38 @@ public class ObjectInteraction : MonoBehaviour
 
     private void OnInteractButtonClicked()
     {
-        foreach (Human human in GlobalVariables.Humans)
-        {
-            if(human.available)
+        Building building = gameObject.GetComponent<Building>();
+        Resources resources = gameObject.GetComponent<Resources>();
+        
+        if (interactButton.text != "WIP"){
+            foreach (Human human in GlobalVariables.humans)
             {
-                Vector3 destination = Vector3.zero;
-                if (childRenderers != null)
+                if (human.available)
                 {
-                    destination = transform.GetChild(0).position;
-                } else if (objectRenderer != null)
-                {
-                    destination = transform.position;
-                }
+                    Vector3 destination = Vector3.zero;
+                    if (childRenderers != null)
+                    {
+                        destination = transform.GetChild(0).position;
+                    }
+                    else if (objectRenderer != null)
+                    {
+                        destination = transform.position;
+                    }
 
-                Debug.Log("Human available " + destination);
-                human.SetDestination(destination);
-                human.available = false;
-                break;
+                    if (transform.name.Contains("Building"))
+                    {
+                        //TODO : get the name of the building and call the function OnInteract
+                    }
+                    else if (transform.name.Contains("Resources"))
+                    {
+
+                        //TODO : get the name of the building and call the function OnInteract
+                    }
+
+                    human.SetDestination(destination, human.id);
+                    human.available = false;
+                    break;
+                }
             }
         }
         uiElement.style.display = DisplayStyle.None;
@@ -155,5 +176,15 @@ public class ObjectInteraction : MonoBehaviour
         // Hide the UI element when the Cancel button is clicked
         uiElement.style.display = DisplayStyle.None;
         DeSelected();
+    }
+    
+    private void OnMouseEnter()
+    {
+        isMouseOver = true;
+    }
+
+    private void OnMouseExit()
+    {
+        isMouseOver = false;
     }
 }

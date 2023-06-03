@@ -159,6 +159,17 @@ public class BuildUI : MonoBehaviour
         if (GlobalVariables.matrix.CanPlace(bounds))
         {
             GlobalVariables.matrix.AddOccupiedTiles(bounds);
+            GlobalVariables.buildings.Add(prefab);
+            if (prefab.name.Contains("T1House"))
+            {
+                GlobalVariables.housings.Add(new Housing(prefab,2,new List<int>()));
+                GlobalVariables.housingCapacity += 2;
+            } 
+            else if (prefab.name.Contains("T2House"))
+            {
+                GlobalVariables.housings.Add(new Housing(prefab,4,new List<int>()));
+                GlobalVariables.housingCapacity += 4;
+            }
             return true;
         }
 

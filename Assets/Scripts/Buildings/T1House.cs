@@ -26,4 +26,9 @@
     {
         return currentNumberOfHumans < NumberOfHumans;
     }
+    
+    public override void OnInteract(int idHuman) 
+    {
+        throw new System.NotImplementedException();
+    }
 }

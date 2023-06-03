@@ -8,9 +8,11 @@ public abstract class Building : MonoBehaviour
     protected int StoneCost { get; set; }
     protected int MetalCost { get; set; }
     protected Vector3 Location { get; set; }
-    
+    protected Human human;
+
     public abstract void DisplayUI();
     public abstract int[] GetCost();
     public abstract bool CheckLivingSpace(int currentNumberOfHumans);
     public abstract int GetTimeToBuild();
+    public abstract void OnInteract(int idHuman);
 }

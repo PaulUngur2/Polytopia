@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+
 public class Human : MonoBehaviour
 {
     public float stoppingDistance = 1f;
@@ -12,6 +14,8 @@ public class Human : MonoBehaviour
     private Vector3 startDestination;
     private Vector3 endDestination;
     public bool available { get; set; }
+    public int idHuman = 0;
+    public int id { get; set; }
 
     void Awake()
     {
@@ -20,6 +24,7 @@ public class Human : MonoBehaviour
     void Start()
     {
         available = true;
+        id = idHuman++;
         render = GetComponent<Renderer>();
         Material[] materials = render.materials;
         materials[0].color = Random.ColorHSV();
@@ -32,9 +37,38 @@ public class Human : MonoBehaviour
             Color.Lerp(new Color(255f/255f, 217f/255f, 0f/255f), new Color(255f/255f, 236f/255f, 160f/255f), Random.Range(0f, 1f)),
         };
         materials[4].color = HairColors[Random.Range(0, HairColors.Length)];
-        GlobalVariables.Humans.Add(this);
+        GlobalVariables.humans.Add(this);
+    }
+    
+    public void SetDestination(Vector3 destination, int id)
+    {
+        var human = GlobalVariables.humans.FirstOrDefault(h => h.id == id);
+        if (human != null)
+        {
+            human.agent.SetDestination(destination);
+        }
+        else
+        {
+            Debug.LogError($"Could not find Human with id: {id}");
+        }
     }
 
+    void Update()
+    {
+        if (!available)
+        {
+            foreach (var housing in GlobalVariables.housings)
+            {
+                if (housing.Humans.Contains(id))
+                {
+                    SetDestination(housing.House.transform.position, id);
+                    break;
+                }
+            }
+        }
+    }
+
+    
     /*void Update()
     {
         setDestination();
@@ -62,11 +96,6 @@ public class Human : MonoBehaviour
             }
         
     }*/
-    
-    public void SetDestination(Vector3 destination)
-    {
-        agent.SetDestination(destination);
-    }
 
     /*public void unselecting()
     {

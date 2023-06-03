@@ -1,19 +1,27 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Linq;
 
 
 public class ObjectInteraction : MonoBehaviour
 {
     public VisualTreeAsset uiAsset;
-    private VisualElement uiElement;
-    private Button cancelButton;
-    private Button interactButton;
+    protected VisualElement uiElement;
+    protected Button cancelButton;
+    protected Button interactButton;
     private bool isMouseOver;
     private bool isSelected;
     private Renderer render;
     private Material[] materials;
-    
-    
+    private Building building;
+    private Dictionary<string, string> buildingFunctions = new Dictionary<string, string>()
+    {
+        { "House", "Sleep" },
+        { "Farm", "Work" },
+        { "Resources", "Collect" },
+    };
 
     void Start()
     {
@@ -46,16 +54,6 @@ public class ObjectInteraction : MonoBehaviour
         root.Add(uiElement);
     }
 
-    void OnMouseEnter()
-    {
-        isMouseOver = true;
-    }
-
-    void OnMouseExit()
-    {
-        isMouseOver = false;
-    }
-
     void Update()
     {
         // Show the UI element at the position of the mouse cursor when the game object is clicked using the mouse scroll button
@@ -68,6 +66,17 @@ public class ObjectInteraction : MonoBehaviour
                 Selected();
             }
             
+            interactButton = uiElement.Q<Button>("Interact");
+
+            foreach (KeyValuePair<string, string> kvp in buildingFunctions)
+            {
+                if (gameObject.name.Contains(kvp.Key))
+                {
+                    interactButton.text = kvp.Value;
+                    break;
+                }
+            }
+
             uiElement.style.position = Position.Absolute;
             uiElement.style.left = Input.mousePosition.x;
             uiElement.style.top = Screen.height - Input.mousePosition.y;
@@ -75,7 +84,7 @@ public class ObjectInteraction : MonoBehaviour
         }
     }
     
-    void Selected()
+    private void Selected()
     {
         isSelected = true;
         materials = render.materials;
@@ -90,7 +99,7 @@ public class ObjectInteraction : MonoBehaviour
         }
     }
     
-    void DeSelected()
+    private void DeSelected()
     {
         isSelected = false;
         materials = render.materials;
@@ -104,12 +113,13 @@ public class ObjectInteraction : MonoBehaviour
 
     private void OnInteractButtonClicked()
     {
-        foreach (Human human in GlobalVariables.Humans)
+        foreach (Human human in GlobalVariables.humans)
         {
-            if(human.available)
+            if (human.available)
             {
-                human.SetDestination(transform.position);
+                human.SetDestination(transform.position, human.id);
                 human.available = false;
+                gameObject.GetComponent<Building>().OnInteract(human.id);
                 break;
             }
         }
@@ -119,5 +129,15 @@ public class ObjectInteraction : MonoBehaviour
     {
         // Hide the UI element when the Cancel button is clicked
         uiElement.style.display = DisplayStyle.None;
+    }
+    
+    private void OnMouseEnter()
+    {
+        isMouseOver = true;
+    }
+
+    private void OnMouseExit()
+    {
+        isMouseOver = false;
     }
 }

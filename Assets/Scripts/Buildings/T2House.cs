@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System;
+using UnityEditor;
 
 public class T2House : Building
 {
@@ -29,5 +30,9 @@ public class T2House : Building
     {
         return currentNumberOfHumans < NumberOfHumans;
     }
-        
+
+    public override void OnInteract(int idHuman)
+    {
+        throw new System.NotImplementedException();
+    }
 }

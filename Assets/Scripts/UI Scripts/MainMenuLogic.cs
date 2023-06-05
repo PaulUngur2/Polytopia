@@ -4,6 +4,8 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using System.Collections.Generic;
+
 
 public class MainMenuLogic : MonoBehaviour
 {
@@ -11,7 +13,7 @@ public class MainMenuLogic : MonoBehaviour
     [Range(0,1)]
     public float turnAngle = 0.2f;
     public Volume postProcessingVolume;
-    public GameObject otherUIs;
+    public List<GameObject> otherUIs;
     private GameObject thisUI;
     private Camera mainCamera;
     private Camera menuCamera;
@@ -21,7 +23,10 @@ public class MainMenuLogic : MonoBehaviour
     private void OnEnable()
     {
         // Disable the other UIs and find the current one
-        otherUIs.SetActive(false);
+        foreach (GameObject uiObject in otherUIs)
+        {
+            uiObject.SetActive(false);
+        }
         thisUI = GameObject.Find("MainMenuUI");
 
         // Find the two cameras and assign them
@@ -64,7 +69,11 @@ public class MainMenuLogic : MonoBehaviour
         menuCamera.enabled = false;
         mainCamera.enabled = true;
         thisUI.SetActive(false);
-        otherUIs.SetActive(true);
+        GlobalVariables.currentTime = 12;
+        foreach (GameObject uiObject in otherUIs)
+        {
+            uiObject.SetActive(true);
+        }
         dof.focusDistance.value = initialFocusDistance;
     }
 

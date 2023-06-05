@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class Housing
 {
     public GameObject House { get; set; }
-    public int MaxNumberOfHumans { get; set; }
+    public int Occupants { get; set; }
     public List<int> Humans { get; set; }
 
-    public Housing(GameObject house, int maxNumberOfHumans, List<int> humans)
+    public Housing(GameObject house, int occupants, List<int> humans)
     {
         House = house;
-        MaxNumberOfHumans = maxNumberOfHumans;
+        Occupants = occupants;
         Humans = humans;
     }
 }

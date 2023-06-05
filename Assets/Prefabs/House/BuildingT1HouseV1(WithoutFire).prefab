@@ -100,7 +100,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 425be91903769d94e8c215479e49dd0e, type: 3}
       propertyPath: m_Name
-      value: T1HouseV1(WithoutFire)
+      value: BuildingT1HouseV1(WithoutFire)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 425be91903769d94e8c215479e49dd0e, type: 3}
       propertyPath: m_TagString
@@ -208,3 +208,15 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 0}
   m_SortingOrder: 0
+--- !u!114 &6344830961106422091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2304637968768716554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eb9758b19de4e4d8f1807d638df267c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

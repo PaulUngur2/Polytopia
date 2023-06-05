@@ -39,6 +39,7 @@ public class T2Farm : Building
             if (currentHuman != null)
             {
                 GlobalVariables.resources["Food"] += 2;
+                ResourcesUI.UpdateValues();
             }
         }
     }

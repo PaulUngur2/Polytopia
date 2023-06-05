@@ -41,6 +41,7 @@ public class T1Farm : Building
             if (currentHuman != null)
             {
                 GlobalVariables.resources["Food"] += 2;
+                ResourcesUI.UpdateValues();
             }
         }
     }

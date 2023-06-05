@@ -17,11 +17,13 @@ public class Human : MonoBehaviour
     public static int idHuman = 0;
     public int id;
 
-    void Awake()
+    private void Awake()
     {
         mainCamera = FindObjectOfType<Camera> ();
     }
-    void Start()
+    
+    
+    private void Start()
     {
         available = true;
         id = ++idHuman;
@@ -40,121 +42,16 @@ public class Human : MonoBehaviour
         };
         materials[4].color = HairColors[Random.Range(0, HairColors.Length)];
         
-        // Check if NavMeshAgent component exists
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        if (agent == null)
-        {
-            // Add NavMeshAgent component if it doesn't exist
-            agent = gameObject.AddComponent<UnityEngine.AI.NavMeshAgent>();
-        }
+        agent = agent == null ? gameObject.AddComponent<UnityEngine.AI.NavMeshAgent>() : agent;
         agent.stoppingDistance = stoppingDistance;
         
         GlobalVariables.humans.Add(this);
     }
-
     
-    void Update()
-    {
-        if (GlobalVariables.currentTime > 18)
-        {
-            foreach (var variaHuman in GlobalVariables.humans)
-            {
-                variaHuman.available = true;
-
-                foreach (var housing in GlobalVariables.housings)
-                {
-                    if (housing.Humans.Contains(variaHuman.id))
-                    {
-                        variaHuman.SetDestination(Location(housing.House), variaHuman.id);
-                    }
-                }
-            }
-        }
-    }
-
-    public void SetDestination(Vector3 destination, int id)
-    {
-        // Find the Human with the matching id
-        var human = GlobalVariables.humans.FirstOrDefault(h => h.id == id);
-        if (human != null)
-        {
-            // Set the destination for the matched Human
-            human.agent.SetDestination(destination);
-        }
-        else
-        {
-            Debug.LogError($"Could not find Human with id: {id}");
-        }
-    }
-
-
-    private Vector3 Location(GameObject gameObject)
-    {
-        if (gameObject.transform.childCount > 0)
-        {
-            return gameObject.transform.GetChild(0).position;
-        }
-        else
-        {
-            return gameObject.transform.position;
-        }
-    }
-
     
-    /*void Update()
+    public void SetDestination(Vector3 destination)
     {
-        setDestination();
-        
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
-        {
-            if (Vector3.Distance(agent.transform.position, hit.point) < stoppingDistance)
-            {
-                agent.isStopped = true;
-            }
-        }
-    }*/
-
-    /*public void OnMouseDown()
-    {
-        if (!selected)
-        {
-            selecting();
-        }
-            else
-            {
-                unselecting();
-            }
-        
-    }*/
-
-    /*public void unselecting()
-    {
-        selected = false;
-        materials = render.materials;
-        foreach (Material material in materials)
-        {
-            // Restore the original color of the material
-            Color originalColor = material.GetColor("_OriginalColor");
-            material.color = originalColor;
-        }
-        GlobalVariables.selectedHumans.Remove(this);
+        agent.SetDestination(destination);
     }
-
-    public void selecting()
-    {
-        selected = true;
-        materials = render.materials;
-        foreach (Material material in materials)
-        {
-            // Store the original color of the material
-            material.SetColor("_OriginalColor", material.color);
-                
-            // Make the material redder
-            Color newColor = material.color + new Color(0.2f, 0f, 0f);
-            material.color = newColor;
-        }
-        GlobalVariables.selectedHumans.Add(this);
-    }*/
 }

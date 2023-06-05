@@ -56,6 +56,7 @@ public class MetalDeposit : Resources
                 var hoursWorked = GlobalVariables.currentTime - 6;
                 
                 GlobalVariables.resources[TypeOfResource] += GetResourceAmount(hoursWorked);
+                ResourcesUI.UpdateValues();
             }
         }
     }

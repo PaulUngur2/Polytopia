@@ -25,17 +25,15 @@ public class ObjectInteraction : MonoBehaviour
         { "Rocks", "Collect Stone" }
     };
 
-    void Start()
+    private void Start()
     {
         uiElement = uiAsset.CloneTree();
         uiElement.style.display = DisplayStyle.None;
         
         if (transform.childCount > 0)
         {
-            // Get all child mesh renderers
             childRenderers = GetComponentsInChildren<Renderer>();
-
-            // Store the original colors of each child renderer
+            
             originalColors = new Color[childRenderers.Length];
             for (int i = 0; i < childRenderers.Length; i++)
             {
@@ -44,7 +42,6 @@ public class ObjectInteraction : MonoBehaviour
         }
         else
         {
-            // Get the renderer and store the original color
             objectRenderer = GetComponent<Renderer>();
             originalObjectColor = objectRenderer.material.color;
         }
@@ -52,24 +49,20 @@ public class ObjectInteraction : MonoBehaviour
         interactButton = uiElement.Q<Button>("Interact");
         if (interactButton != null)
         {
-            // Register a click event listener for the button
             interactButton.clickable.clicked += OnInteractButtonClicked;
         }
-
-        // Find the button with the "Cancel" id
+        
         cancelButton = uiElement.Q<Button>("Cancel");
         if (cancelButton != null)
         {
-            // Register a click event listener for the button
             cancelButton.clickable.clicked += OnCancelButtonClicked;
         }
-
-        // Add the UI element to the root of the UI hierarchy
+        
         var root = GetComponent<UIDocument>().rootVisualElement;
         root.Add(uiElement);
     }
     
-    void Update()
+    private void Update()
     {
         // Show the UI element at the position of the mouse cursor when the game object is clicked using the mouse scroll button
         if (isMouseOver && Input.GetMouseButtonDown(2))
@@ -158,23 +151,15 @@ public class ObjectInteraction : MonoBehaviour
                     if (transform.name.Contains("Building"))
                     {
                         Building buildingComponent = transform.GetComponent<Building>();
-                        string className = buildingComponent.GetType().Name;
-                        Type type = Type.GetType(className);
-                        MethodInfo method = type.GetMethod("OnInteract");
-                        object[] parameters = new object[] { human.id };
-                        method.Invoke(buildingComponent, parameters);
+                        InvokeOnInteractMethod(buildingComponent, human.id);
                     }
                     else if (transform.name.Contains("Resources"))
                     {
                         Resources resourcesComponent = transform.GetComponent<Resources>();
-                        string className = resourcesComponent.GetType().Name;
-                        Type type = Type.GetType(className);
-                        MethodInfo method = type.GetMethod("OnInteract");
-                        object[] parameters = new object[] { human.id };
-                        method.Invoke(resourcesComponent, parameters);
+                        InvokeOnInteractMethod(resourcesComponent, human.id);
                     }
-
-                    human.SetDestination(destination, human.id);
+                    
+                    human.SetDestination(destination);
                     human.available = false;
                     break;
                 }
@@ -183,6 +168,15 @@ public class ObjectInteraction : MonoBehaviour
         uiElement.style.display = DisplayStyle.None;
         DeSelected();
     }
+    
+    private void InvokeOnInteractMethod<T>(T component, int humanId) where T : MonoBehaviour
+    {
+        string className = component.GetType().Name;
+        Type type = Type.GetType(className);
+        MethodInfo method = type.GetMethod("OnInteract");
+        method.Invoke(component, new object[] { humanId });
+    }
+
 
     private void OnCancelButtonClicked()
     {
@@ -191,11 +185,13 @@ public class ObjectInteraction : MonoBehaviour
         DeSelected();
     }
     
+    
     private void OnMouseEnter()
     {
         isMouseOver = true;
     }
 
+    
     private void OnMouseExit()
     {
         isMouseOver = false;

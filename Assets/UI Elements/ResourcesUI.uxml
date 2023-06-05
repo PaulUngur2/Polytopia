@@ -1,0 +1,20 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="align-items: flex-end; height: auto; width: auto; margin-left: auto;">
+        <ui:GroupBox name="FoodGroup" style="flex-direction: row; max-height: none; height: auto; align-items: center; padding-top: 2px; padding-bottom: 2px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 5px; padding-right: 5px;">
+            <ui:VisualElement name="FoodIcon" style="width: 32px; height: 32px; background-image: url(&apos;project://database/Assets/UI%20Elements/FoodIcon.png?fileID=2800000&amp;guid=78b3c962b74af9948ae58ac9df4abcd7&amp;type=3#FoodIcon&apos;); -unity-background-scale-mode: scale-to-fit;" />
+            <ui:ProgressBar value="100" name="FoodBar" high-value="1000" style="height: 15px; width: 100px; align-items: stretch;" />
+        </ui:GroupBox>
+        <ui:GroupBox name="WoodGroup" style="flex-direction: row; max-height: none; height: auto; align-items: center; padding-top: 2px; padding-bottom: 2px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 5px; padding-right: 5px;">
+            <ui:VisualElement name="WoodIcon" style="width: 32px; height: 32px; background-image: url(&apos;project://database/Assets/UI%20Elements/WoodIcon.png?fileID=2800000&amp;guid=84bbf7b262f26994b8da25c1c8ccb534&amp;type=3#WoodIcon&apos;); -unity-background-scale-mode: scale-to-fit;" />
+            <ui:ProgressBar value="100" name="WoodBar" high-value="1000" style="height: 15px; width: 100px; align-items: stretch;" />
+        </ui:GroupBox>
+        <ui:GroupBox name="StoneGroup" style="flex-direction: row; max-height: none; height: auto; align-items: center; padding-top: 2px; padding-bottom: 2px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 5px; padding-right: 5px;">
+            <ui:VisualElement name="StoneIcon" style="width: 32px; height: 32px; background-image: url(&apos;project://database/Assets/UI%20Elements/StoneIcon.png?fileID=2800000&amp;guid=187328e8e4bc92b44b3ee67089d05be4&amp;type=3#StoneIcon&apos;); -unity-background-scale-mode: scale-to-fit;" />
+            <ui:ProgressBar value="100" name="StoneBar" high-value="1000" style="height: 15px; width: 100px; align-items: stretch;" />
+        </ui:GroupBox>
+        <ui:GroupBox name="IronGroup" style="flex-direction: row; max-height: none; height: auto; align-items: center; padding-top: 2px; padding-bottom: 2px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 5px; padding-right: 5px;">
+            <ui:VisualElement name="IronIcon" style="width: 32px; height: 32px; background-image: url(&apos;project://database/Assets/UI%20Elements/IronIcon.png?fileID=2800000&amp;guid=fffd6664427532a4cb34046ec2b3c084&amp;type=3#IronIcon&apos;); -unity-background-scale-mode: scale-to-fit;" />
+            <ui:ProgressBar value="100" name="IronBar" high-value="1000" style="height: 15px; width: 100px; align-items: stretch;" />
+        </ui:GroupBox>
+    </ui:VisualElement>
+</ui:UXML>

@@ -42,6 +42,7 @@ public class T1Farm : Building
             {
                 GlobalVariables.resources["Food"] += 2;
             }
+            Debug.Log(GlobalVariables.resources["Food"]);
         }
     }
 

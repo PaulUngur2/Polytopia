@@ -59,18 +59,23 @@ public class Human : MonoBehaviour
         {
             foreach (var variaHuman in GlobalVariables.humans)
             {
-                variaHuman.available = true;
-
-                foreach (var housing in GlobalVariables.housings)
+                if (variaHuman.id == id)
                 {
-                    if (housing.Humans.Contains(variaHuman.id))
+                    variaHuman.available = true;
+
+                    foreach (var housing in GlobalVariables.housings)
                     {
-                        variaHuman.SetDestination(Location(housing.House), variaHuman.id);
+                        if (housing.Humans.Contains(variaHuman.id))
+                        {
+                            variaHuman.SetDestination(Location(housing.House), variaHuman.id);
+                            break;
+                        }
                     }
                 }
             }
         }
     }
+
 
     public void SetDestination(Vector3 destination, int id)
     {

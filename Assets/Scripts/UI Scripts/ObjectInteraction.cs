@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
+using System;
+using System.Reflection;
 
 
 public class ObjectInteraction : MonoBehaviour
@@ -20,7 +22,7 @@ public class ObjectInteraction : MonoBehaviour
         { "Farm", "Work" },
         { "Forest", "Collect Wood" },
         { "Metal", "Collect Metal" },
-        { "Stone", "Collect Stone" }
+        { "Rocks", "Collect Stone" }
     };
 
     void Start()
@@ -136,7 +138,9 @@ public class ObjectInteraction : MonoBehaviour
         Building building = gameObject.GetComponent<Building>();
         Resources resources = gameObject.GetComponent<Resources>();
         
-        if (interactButton.text != "WIP"){
+        if (interactButton.text != "WIP")
+        {
+            
             foreach (Human human in GlobalVariables.humans)
             {
                 if (human.available)
@@ -150,15 +154,24 @@ public class ObjectInteraction : MonoBehaviour
                     {
                         destination = transform.position;
                     }
-
+                    
                     if (transform.name.Contains("Building"))
                     {
-                        //TODO : get the name of the building and call the function OnInteract
+                        Building buildingComponent = transform.GetComponent<Building>();
+                        string className = buildingComponent.GetType().Name;
+                        Type type = Type.GetType(className);
+                        MethodInfo method = type.GetMethod("OnInteract");
+                        object[] parameters = new object[] { human.id };
+                        method.Invoke(buildingComponent, parameters);
                     }
                     else if (transform.name.Contains("Resources"))
                     {
-
-                        //TODO : get the name of the building and call the function OnInteract
+                        Resources resourcesComponent = transform.GetComponent<Resources>();
+                        string className = resourcesComponent.GetType().Name;
+                        Type type = Type.GetType(className);
+                        MethodInfo method = type.GetMethod("OnInteract");
+                        object[] parameters = new object[] { human.id };
+                        method.Invoke(resourcesComponent, parameters);
                     }
 
                     human.SetDestination(destination, human.id);

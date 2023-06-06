@@ -7,16 +7,16 @@ using System.Linq;
 // if you want it to initialize your variables
 public class GlobalVariables : MonoBehaviour
 {
+    [Range(0, 24)] public static float currentTime = 12;
     public static bool buildActive;
     public static MapMatrix matrix;
     public static List<Human> humans;
     public static List<GameObject> buildings;
-    public static float currentTime = 12;
     public static Dictionary<string, int> resources;
     public static List<Housing> housings;
     public static int housingCapacity = 0;
     private Navigation navigation;
-    
+
     private void Awake()
     {
         buildActive = false;
@@ -25,16 +25,16 @@ public class GlobalVariables : MonoBehaviour
         buildings = new List<GameObject>();
         resources = new Dictionary<string, int>()
         {
-            {"Wood", 100},
-            {"Food", 100},
-            {"Metal", 50},
-            {"Stone", 200}
+            { "Wood", 100 },
+            { "Food", 100 },
+            { "Metal", 50 },
+            { "Stone", 200 }
         };
         housings = new List<Housing>();
         navigation = new Navigation();
     }
 
-    
+
     private void Start()
     {
         GameObject[] houseObjects = GameObject.FindGameObjectsWithTag("House");

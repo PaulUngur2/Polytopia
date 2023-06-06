@@ -16,3 +16,9 @@
     height: auto;
     background-image: none;
 }
+
+.position {
+    position: absolute; 
+    bottom: 0;
+    left: 0;
+}

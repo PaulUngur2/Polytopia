@@ -1,17 +1,12 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
-using System.Collections.Generic;
-
 
 public class MainMenuLogic : MonoBehaviour
 {
-    
-    [Range(0,1)]
-    public float turnAngle = 0.2f;
+    [Range(0, 1)] public float turnAngle = 0.2f;
     public Volume postProcessingVolume;
     public List<GameObject> otherUIs;
     private GameObject thisUI;
@@ -27,6 +22,7 @@ public class MainMenuLogic : MonoBehaviour
         {
             uiObject.SetActive(false);
         }
+
         thisUI = GameObject.Find("MainMenuUI");
 
         // Find the two cameras and assign them
@@ -41,6 +37,7 @@ public class MainMenuLogic : MonoBehaviour
             mainCamera = cameras[1];
             menuCamera = cameras[0];
         }
+
         mainCamera.enabled = false;
         menuCamera.enabled = true;
 
@@ -49,7 +46,7 @@ public class MainMenuLogic : MonoBehaviour
         postProcessingVolume.profile.TryGet(out dof);
         initialFocusDistance = dof.focusDistance.value;
         dof.focusDistance.value = 5;
-        
+
         // Find the UI elements and initialize them
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
         Button playButton = root.Q<Button>("PlayButton");
@@ -74,6 +71,7 @@ public class MainMenuLogic : MonoBehaviour
         {
             uiObject.SetActive(true);
         }
+
         dof.focusDistance.value = initialFocusDistance;
     }
 

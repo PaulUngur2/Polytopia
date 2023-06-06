@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine.UIElements;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using MouseButton = UnityEngine.UIElements.MouseButton;
 
 public class BuildUI : MonoBehaviour
 {
@@ -25,40 +28,14 @@ public class BuildUI : MonoBehaviour
     public void Start()
     {
         mainCamera = Camera.main;
-        plane = new Plane(Vector3.up, new Vector3(0,-0.5f,0));
-    }
-
-    public void Update()
-    {
-        if (GlobalVariables.buildActive)
-        {
-            Vector3 mousePosition = Utils.CastRay(mainCamera, plane);
-            mousePosition.x = (float)Math.Round(mousePosition.x);
-            mousePosition.z = (float)Math.Round(mousePosition.z);
-            currentPrefab.transform.position = mousePosition;
-
-            float scrollDelta = Input.mouseScrollDelta.y;
-            if (scrollDelta != 0)
-            {
-                currentPrefab.transform.Rotate(Vector3.up, 90 * scrollDelta);
-            }
-            
-            if (Input.GetMouseButton((int)MouseButton.LeftMouse)) {
-                if (Place(currentPrefab)) {
-                    Select(null);
-                }
-            } else if (Input.GetKey(KeyCode.Escape) || Input.GetMouseButtonDown((int)MouseButton.RightMouse)) {
-                Destroy(currentPrefab);
-                Select(null);
-            }
-        }
+        plane = new Plane(Vector3.up, new Vector3(0, -0.5f, 0));
     }
 
     public void OnEnable()
     {
         root = GetComponent<UIDocument>().rootVisualElement;
         scrollView = root.Q<VisualElement>("ScrollView");
-        
+
         VisualElement tab1 = root.Q<VisualElement>("tab1");
         VisualElement tab2 = root.Q<VisualElement>("tab2");
         VisualElement tab3 = root.Q<VisualElement>("tab3");
@@ -90,6 +67,67 @@ public class BuildUI : MonoBehaviour
         streetLampButton.clicked += () => Select("Street Lamp");
     }
 
+    // private void test()
+    // {
+    //     Rect position1 = root.Q<VisualElement>("background").layout;
+    //     Rect position = root.Q<VisualElement>("background").parent.layout;
+    //     Rect width = tabs[activeTabIndex].layout;
+    //     Rect rect = new Rect(position.x, position.y, width.width, position.height);
+    //     Vector2 mousePos = Input.mousePosition;
+    //     if(rect.Contains(mousePos))
+    //     {
+    //         String msg = "inside" + 
+    //                       "X: " + rect.x +
+    //                      "\nY: " + rect.y + 
+    //                      "\n H: " + rect.height + 
+    //                      "\nW: " + rect.width + 
+    //                      "\nMX: " + mousePos.x + 
+    //                      "\n MY: " + mousePos.y;
+    //         Debug.Log(msg);
+    //     }
+    //     else
+    //     {
+    //         String msg = "outside" + 
+    //                      "X: " + rect.x +
+    //                      "\nY: " + rect.y + 
+    //                      "\n H: " + rect.height + 
+    //                      "\nW: " + rect.width + 
+    //                      "\nMX: " + mousePos.x + 
+    //                      "\n MY: " + mousePos.y;
+    //         Debug.Log(msg);
+    //     }
+    // }
+    
+    public void Update()
+    {
+        if (GlobalVariables.buildActive)
+        {
+            Vector3 mousePosition = Utils.CastRay(mainCamera, plane);
+            mousePosition.x = (float)Math.Round(mousePosition.x);
+            mousePosition.z = (float)Math.Round(mousePosition.z);
+            currentPrefab.transform.position = mousePosition;
+
+            float scrollDelta = Input.mouseScrollDelta.y;
+            if (scrollDelta != 0)
+            {
+                currentPrefab.transform.Rotate(Vector3.up, 90 * scrollDelta);
+            }
+
+            if (Input.GetMouseButton((int)MouseButton.LeftMouse))
+            {
+                if (Place(currentPrefab))
+                {
+                    Select(null);
+                }
+            }
+            else if (Input.GetKey(KeyCode.Escape) || Input.GetMouseButtonDown((int)MouseButton.RightMouse))
+            {
+                Destroy(currentPrefab);
+                Select(null);
+            }
+        }
+    }
+
     void ToggleDisplay(int index)
     {
         if (index == activeTabIndex && tabs[index].style.display == DisplayStyle.Flex)
@@ -113,7 +151,6 @@ public class BuildUI : MonoBehaviour
                     tabs[i].style.display = DisplayStyle.None;
                     tabButtons[i].style.backgroundColor = new Color(0.22f, 0.22f, 0.22f);
                 }
-                
             }
 
             scrollView.style.display = DisplayStyle.Flex;
@@ -123,6 +160,10 @@ public class BuildUI : MonoBehaviour
 
     void Select(String prefab)
     {
+        if (!GlobalVariables.buildings.Contains(currentPrefab))
+        {
+            Destroy(currentPrefab);
+        }
         if (prefab == "T1 House")
         {
             currentPrefab = Instantiate(t1House, Utils.CastRay(mainCamera, plane), Quaternion.identity);
@@ -164,24 +205,24 @@ public class BuildUI : MonoBehaviour
                 return false;
                 //BUG BUILD UI
             }
-            
+
             GlobalVariables.matrix.AddOccupiedTiles(bounds);
             GlobalVariables.buildings.Add(prefab);
-            
+
             if (prefab.name.Contains("T1House"))
             {
-                GlobalVariables.housings.Add(new Housing(prefab,2,new List<int>()));
+                GlobalVariables.housings.Add(new Housing(prefab, 2, new List<int>()));
                 GlobalVariables.housingCapacity += 2;
-            } 
+            }
             else if (prefab.name.Contains("T2House"))
             {
-                GlobalVariables.housings.Add(new Housing(prefab,4,new List<int>()));
+                GlobalVariables.housings.Add(new Housing(prefab, 4, new List<int>()));
                 GlobalVariables.housingCapacity += 4;
             }
+
             return true;
         }
 
         return false;
     }
-    
 }

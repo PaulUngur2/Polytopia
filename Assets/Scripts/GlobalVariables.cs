@@ -25,7 +25,7 @@ public class GlobalVariables : MonoBehaviour
         buildings = new List<GameObject>();
         resources = new Dictionary<string, int>()
         {
-            {"Wood", 500},
+            {"Wood", 100},
             {"Food", 100},
             {"Metal", 50},
             {"Stone", 200}

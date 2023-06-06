@@ -18,7 +18,7 @@ public class PlaceBuildings : MonoBehaviour
 
     private GameObject ground; // Reference to the "Ground" plane mesh
 
-    void Start()
+    private void Start()
     {
         root = GetComponent<UIDocument>().rootVisualElement;
 
@@ -41,14 +41,14 @@ public class PlaceBuildings : MonoBehaviour
         // Find the "Ground" object in the scene
         ground = GameObject.Find("Ground");
 
-        for (int i = 0; i < buttons.Count; i++)
+        for (var i = 0; i < buttons.Count; i++)
         {
-            int index = i;
+            var index = i;
             buttons[i].clicked += () => TogglePrefab(index);
         }
     }
 
-    void TogglePrefab(int index)
+    private void TogglePrefab(int index)
     {
         if (index == activeIndex)
         {
@@ -62,29 +62,23 @@ public class PlaceBuildings : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
-        if (activeIndex != -1 && Input.GetMouseButtonDown(0))
-        {
-            // Get mouse position in world space
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+        if (activeIndex == -1 || !Input.GetMouseButtonDown(0)) return;
+        // Get mouse position in world space
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
 
-            // Check if the raycast hit the "Ground" object
-            if (Physics.Raycast(ray, out hit) && hit.collider.gameObject == ground)
-            {
-                // Check if there is no collider in the placement position
-                Collider[] colliders = Physics.OverlapBox(hit.point, prefabs[activeIndex].GetComponent<BoxCollider>().bounds.extents);
-                if (colliders.Length == 0)
-                {
-                    // Place prefab at mouse position
-                    GameObject prefab = prefabs[activeIndex];
-                    Instantiate(prefab, hit.point, Quaternion.identity);
+        // Check if the raycast hit the "Ground" object
+        if (!Physics.Raycast(ray, out hit) || hit.collider.gameObject != ground) return;
+        // Check if there is no collider in the placement position
+        var colliders = Physics.OverlapBox(hit.point, prefabs[activeIndex].GetComponent<BoxCollider>().bounds.extents);
+        if (colliders.Length != 0) return;
+        // Place prefab at mouse position
+        var prefab = prefabs[activeIndex];
+        Instantiate(prefab, hit.point, Quaternion.identity);
                     
-                    // Deactivate prefab placement
-                    activeIndex = -1;
-                }
-            }
-        }
+        // Deactivate prefab placement
+        activeIndex = -1;
     }
 }

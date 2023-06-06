@@ -128,8 +128,6 @@ public class ObjectInteraction : MonoBehaviour
 
     private void OnInteractButtonClicked()
     {
-        Building building = gameObject.GetComponent<Building>();
-        Resources resources = gameObject.GetComponent<Resources>();
         
         if (interactButton.text != "WIP")
         {

@@ -155,11 +155,19 @@ public class BuildUI : MonoBehaviour
     private bool Place(GameObject prefab)
     {
         Bounds bounds = prefab.GetComponent<Collider>().bounds;
+        BuildLogic buildLogic = new BuildLogic();
 
         if (GlobalVariables.matrix.CanPlace(bounds))
         {
+            if (!buildLogic.ResourcesUsed(prefab))
+            {
+                return false;
+                //BUG BUILD UI
+            }
+            
             GlobalVariables.matrix.AddOccupiedTiles(bounds);
             GlobalVariables.buildings.Add(prefab);
+            
             if (prefab.name.Contains("T1House"))
             {
                 GlobalVariables.housings.Add(new Housing(prefab,2,new List<int>()));
@@ -175,4 +183,5 @@ public class BuildUI : MonoBehaviour
 
         return false;
     }
+    
 }

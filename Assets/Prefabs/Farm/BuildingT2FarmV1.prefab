@@ -120,7 +120,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc134f63dff36cd488f1123a8084bc66, type: 3}
       propertyPath: m_Name
-      value: T2FarmV1
+      value: BuildingT2FarmV1
       objectReference: {fileID: 0}
     - target: {fileID: 3468998915649826304, guid: bc134f63dff36cd488f1123a8084bc66, type: 3}
       propertyPath: m_RootOrder
@@ -211,6 +211,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiAsset: {fileID: 9197481963319205126, guid: ae5bb843855d73d46b171e830b0aa265, type: 3}
+--- !u!114 &8945269169379918725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7164498725289330934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b5d24ba0486474f8b1e2e4c34edd742, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7504889295353434700 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bc134f63dff36cd488f1123a8084bc66, type: 3}

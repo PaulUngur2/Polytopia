@@ -3,6 +3,7 @@ using UnityEngine.UIElements;
 using System.Collections.Generic;
 using System;
 using System.Reflection;
+using UnityEngine.EventSystems;
 
 
 public class ObjectInteraction : MonoBehaviour
@@ -107,7 +108,7 @@ public class ObjectInteraction : MonoBehaviour
         }
     }
 
-    private void DeSelected()
+    public void DeSelected()
     {
         //isSelected = false;
         if (childRenderers != null)
@@ -129,7 +130,7 @@ public class ObjectInteraction : MonoBehaviour
     private void OnInteractButtonClicked()
     {
         
-        if (interactButton.text != "WIP")
+        if (interactButton.text != "WIP" && GlobalVariables.currentTime <= 18 && GlobalVariables.currentTime >= 6)
         {
             
             foreach (Human human in GlobalVariables.humans)
@@ -194,4 +195,5 @@ public class ObjectInteraction : MonoBehaviour
     {
         isMouseOver = false;
     }
+
 }

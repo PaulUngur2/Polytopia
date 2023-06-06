@@ -16,6 +16,8 @@ public class GlobalVariables : MonoBehaviour
     public static List<Housing> housings;
     public static int housingCapacity = 0;
     private Navigation navigation;
+	  public static float currentDay = 1;
+    public static float dayToGoHome = 1;
 
     private void Awake()
     {
@@ -47,12 +49,16 @@ public class GlobalVariables : MonoBehaviour
         }
     }
 
-
     private void Update()
     {
-        if (currentTime > 18)
+        if (navigation.HasToGoHome())
         {
             navigation.ToUpdate();
         }
+
+		if (Math.Truncate(currentTime) == 0 && currentDay == (dayToGoHome-1)){
+			currentDay++;
+			Debug.Log("CurrentDay " + currentDay);
+		}
     }
 }

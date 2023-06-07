@@ -28,27 +28,14 @@ public class GlobalVariables : MonoBehaviour
         resources = new Dictionary<string, int>()
         {
             { "Wood", 100 },
-            { "Food", 100 },
+            { "Food", 2 },
             { "Metal", 50 },
             { "Stone", 200 }
         };
         housings = new List<Housing>();
         navigation = new Navigation();
     }
-
-
-    private void Start()
-    {
-        GameObject[] houseObjects = GameObject.FindGameObjectsWithTag("House");
-        int i = 1;
-        foreach (var house in houseObjects)
-        {
-            housings.Add(new Housing(house, 3, new List<int>() { i }));
-            housingCapacity += 3;
-            i++;
-        }
-    }
-
+    
     private void Update()
     {
         if (navigation.HasToGoHome())

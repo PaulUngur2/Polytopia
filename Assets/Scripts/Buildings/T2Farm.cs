@@ -24,6 +24,11 @@ public class T2Farm : Building
     {
         return currentNumberOfHumans < NumberOfHumans;
     }
+    
+    public override int GetNumberOfHumans()
+    {
+        return NumberOfHumans;
+    }
 
     public override int GetTimeToBuild()
     {

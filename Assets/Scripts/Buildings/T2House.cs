@@ -25,6 +25,11 @@ public class T2House : Building
     {
         return TimeToBuild;
     }
+    
+    public override int GetNumberOfHumans()
+    {
+        return NumberOfHumans;
+    }
 
     public override bool CheckLivingSpace(int currentNumberOfHumans)
     {

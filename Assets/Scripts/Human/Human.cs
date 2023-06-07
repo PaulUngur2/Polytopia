@@ -16,6 +16,7 @@ public class Human : MonoBehaviour
     public bool available { get; set; }
     public static int idHuman = 0;
     public int id;
+    public bool housingStatus;
 
     private void Awake()
     {
@@ -27,6 +28,7 @@ public class Human : MonoBehaviour
     {
         available = true;
         id = ++idHuman;
+        housingStatus = false;
         
         render = GetComponent<Renderer>();
         

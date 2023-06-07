@@ -22,6 +22,11 @@
         return TimeToBuild;
     }
     
+    public override int GetNumberOfHumans() 
+    {
+        return NumberOfHumans;
+    }
+    
     public override bool CheckLivingSpace(int currentNumberOfHumans) 
     {
         return currentNumberOfHumans < NumberOfHumans;

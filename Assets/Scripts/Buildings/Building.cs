@@ -10,6 +10,7 @@ public abstract class Building : MonoBehaviour
 
     public abstract void DisplayUI();
     public abstract int[] GetCost();
+    public abstract int GetNumberOfHumans();
     public abstract bool CheckLivingSpace(int currentNumberOfHumans);
     public abstract int GetTimeToBuild();
     public abstract void OnInteract(int idHuman);

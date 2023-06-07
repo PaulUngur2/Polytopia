@@ -205,24 +205,42 @@ public class BuildUI : MonoBehaviour
                 return false;
                 //BUG BUILD UI
             }
-
+            
             GlobalVariables.matrix.AddOccupiedTiles(bounds);
             GlobalVariables.buildings.Add(prefab);
 
-            if (prefab.name.Contains("T1House"))
+            if (prefab.GetComponent<Decorations>() == null)
             {
-                GlobalVariables.housings.Add(new Housing(prefab, 2, new List<int>()));
-                GlobalVariables.housingCapacity += 2;
+                HousingCheck(prefab);
             }
-            else if (prefab.name.Contains("T2House"))
-            {
-                GlobalVariables.housings.Add(new Housing(prefab, 4, new List<int>()));
-                GlobalVariables.housingCapacity += 4;
-            }
-
+            
             return true;
         }
 
         return false;
     }
+    
+    private void HousingCheck(GameObject prefab)
+    {
+        List<int> housingList = new List<int>();
+        foreach (var variaHuman in GlobalVariables.humans)
+        {
+            if (!variaHuman.housingStatus)
+            {
+                variaHuman.housingStatus = true;
+                housingList.Add(variaHuman.id);
+            }
+        }
+        
+        GlobalVariables.housings.Add(new Housing(prefab, InvokeOnOccupants(prefab.GetComponent<Building>()), housingList));
+        
+    }
+    
+    private int InvokeOnOccupants<T>(T component) where T : MonoBehaviour
+    {
+        var type = component.GetType();
+        var method = type.GetMethod("GetNumberOfHumans");
+        return (int)method.Invoke(component, null);
+    }
+
 }

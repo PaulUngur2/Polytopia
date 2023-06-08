@@ -52,7 +52,7 @@ public class MainMenuLogic : MonoBehaviour
         Button playButton = root.Q<Button>("PlayButton");
         Button exitButton = root.Q<Button>("ExitButton");
         playButton.clicked += StartGame;
-        exitButton.clicked += ExitGame;
+        exitButton.clicked += Suicide;
     }
 
     private void FixedUpdate()
@@ -75,8 +75,13 @@ public class MainMenuLogic : MonoBehaviour
         dof.focusDistance.value = initialFocusDistance;
     }
 
-    private void ExitGame()
+    public static void Suicide()
     {
-        Application.Quit(0);
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit(0);
+        #endif
+        // Environment.Exit(0);
     }
 }

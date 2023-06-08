@@ -1,7 +1,6 @@
 using System;
-using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
+using UnityEngine;
 
 // This scrip has to be attached to anything in the scene
 // if you want it to initialize your variables
@@ -16,7 +15,7 @@ public class GlobalVariables : MonoBehaviour
     public static List<Housing> housings;
     public static int housingCapacity = 0;
     private Navigation navigation;
-	  public static float currentDay = 1;
+    public static float currentDay = 1;
     public static float dayToGoHome = 1;
 
     private void Awake()
@@ -35,7 +34,7 @@ public class GlobalVariables : MonoBehaviour
         housings = new List<Housing>();
         navigation = new Navigation();
     }
-    
+
     private void Update()
     {
         if (navigation.HasToGoHome())
@@ -43,9 +42,13 @@ public class GlobalVariables : MonoBehaviour
             navigation.ToUpdate();
         }
 
-		if (Math.Truncate(currentTime) == 0 && currentDay == (dayToGoHome-1)){
-			currentDay++;
-			Debug.Log("CurrentDay " + currentDay);
-		}
+        if (Math.Truncate(currentTime) == 0 && currentDay == (dayToGoHome - 1))
+        {
+            currentDay++;
+            resources["Food"] -= humans.Count;
+            ResourcesUI.UpdateValues();
+            if (resources["Food"] <= 0) MainMenuLogic.Suicide();
+            // if (resources["Food"] <= 0) GameOverLogic.DisplayGameOverScreen();
+        }
     }
 }
